@@ -3,7 +3,7 @@
 }
 
 header {
-  background-color: #22082b;
+  /* background-color: #ef5941; */
 }
 
 .nav-link {
@@ -12,4 +12,8 @@ header {
 
 .nav-link:hover {
   color: rgba(0, 0, 0, 0.319);
+}
+
+.slide-carousel .carousel-item img {
+  width: 20%;
 }
