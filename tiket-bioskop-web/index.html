@@ -57,16 +57,25 @@
             class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
           >
             <li>
-              <a href="#" class="nav-link px-2 link-secondary">Overview</a>
+              <a href="#" class="nav-link px-2 link-secondary">Beranda</a>
             </li>
             <li>
-              <a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a>
+              <a href="#" class="nav-link px-2 link-body-emphasis"
+                >Jadwal Film</a
+              >
             </li>
             <li>
-              <a href="#" class="nav-link px-2 link-body-emphasis">Customers</a>
+              <a href="#" class="nav-link px-2 link-body-emphasis">About Us</a>
             </li>
             <li>
-              <a href="#" class="nav-link px-2 link-body-emphasis">Products</a>
+              <a href="#" class="nav-link px-2 link-body-emphasis"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 link-body-emphasis"
+                >News & Trailers</a
+              >
             </li>
           </ul>
 
@@ -79,29 +88,23 @@
             />
           </form>
 
-          <div class="dropdown text-end">
-            <a
-              href="#"
-              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://github.com/mdo.png"
-                alt="mdo"
-                width="32"
-                height="32"
-                class="rounded-circle"
-              />
-            </a>
-            <ul class="dropdown-menu text-small">
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div>
+          <button
+            type="button"
+            class="btn btn-danger me-2"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Login
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal1"
+          >
+            Sign Up
+          </button>
         </div>
       </div>
     </header>
@@ -114,6 +117,84 @@
     <div
       class="modal fade"
       id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+          <div class="modal-header p-5 pb-4 border-bottom-0">
+            <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body p-5 pt-0">
+            <form class="">
+              <div class="form-floating mb-3">
+                <input
+                  type="email"
+                  class="form-control rounded-3"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                />
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control rounded-3"
+                  id="floatingPassword"
+                  placeholder="Password"
+                />
+                <label for="floatingPassword">Password</label>
+              </div>
+              <button
+                class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                type="submit"
+              >
+                Sign up
+              </button>
+              <small class="text-body-secondary"
+                >By clicking Sign up, you agree to the terms of use.</small
+              >
+              <hr class="my-4" />
+              <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+              <button
+                class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                type="submit"
+              >
+                <i class="bi bi-twitter-x me-2"></i>
+                Sign up with Twitter
+              </button>
+              <button
+                class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
+                type="submit"
+              >
+                <i class="bi bi-facebook me-2"></i>
+                Sign up with Facebook
+              </button>
+              <button
+                class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                type="submit"
+              >
+                <i class="bi bi-github me-2"></i>
+                Sign up with GitHub
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sign Up -->
+    <div
+      class="modal fade"
+      id="exampleModal1"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
