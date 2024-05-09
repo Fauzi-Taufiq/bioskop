@@ -1,12 +1,13 @@
-$('.page-scroll').on('click', function(e){
+// $('.page-scroll').on('click', function(e){
 
-    var tujuan = $(this).attr('href');
+//     var tujuan = $(this).attr('href');
 
-    var elemenTujuan = $(tujuan);
+//     var elemenTujuan = $(tujuan);
 
-    $('body').animate({
-        scrollTop: elemenTujuan.offset().top - 50
-    });
+//     $('body').animate({
+//         scrollTop: elemenTujuan.offset().top - 50
+//     });
 
-    e.preventDefault();
-});
+//     e.preventDefault();
+// });
+
