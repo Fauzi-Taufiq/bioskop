@@ -79,6 +79,16 @@ header {
   height: 200px;
 }
 
+.jadwal img {
+  object-fit: cover;
+  width: 200px;
+  height: 300px;
+}
+
+.contact-us .sosmed-contact a {
+  text-decoration: none;
+}
+
 footer {
   background-color: #333333;
 }
