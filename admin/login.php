@@ -56,7 +56,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index2.php" class="btn btn-info btn-user btn-block">
+                                        <a href="index.php" class="btn btn-info btn-user btn-block">
                                             Login
                                         </a>
                                     </form>
