@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="#" class="btn btn-sm btn-primary">Tambah Data</a>
+                                    <a href="jadwalfilm_tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
                                 </div>
                             </div>
                         </div>

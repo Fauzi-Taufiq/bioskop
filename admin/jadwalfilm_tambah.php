@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoviTix - Data News</title>
+    <title>MoviTix - Data Jadwal Film</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -54,67 +54,44 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">News</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Jadwal Film</h1>
                     </div>
 
+                    
                     <!-- Content Row -->
+
                     <div class="row">
+
+                        <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Data News</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Jadwal Film</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Opsi</th>
-                                                </tr>
-                                            </thead>    
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>63</td>
-                                                    <td>2011/07/25</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <form>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Judul Film</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan judul film...">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="deskripsi">Deskripsi</label>
+                                            <textarea name="deskripsi" class="form-control" id="deskripsi"></textarea>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Gambar</label>
+                                            <input type="file" class="form-control" placeholder="Pilih gambar...">
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="news_tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
+                                    <button type="button" class="btn btn-sm btn-primary">Simpan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Content Row -->
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
