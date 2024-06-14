@@ -82,6 +82,10 @@
                                             <label for="">Gambar</label>
                                             <input type="file" class="form-control" placeholder="Pilih gambar...">
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Tanggal Upload</label>
+                                            <input type="date" class="form-control">
+                                        </div>
                                     </form>
                                 </div>
                                 <div class="card-footer">
