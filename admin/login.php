@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
     $result = mysqli_query($connection, $sql);
 
     if ($result->num_rows > 0) {
@@ -84,10 +84,10 @@ if (isset($_POST['submit'])) {
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Lupa Password?</a>
+                                        <a class="small" href="#">Lupa Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Belum punya akun? Daftar</a>
+                                        <a class="small" href="register.php">Belum punya akun? Daftar</a>
                                     </div>
                                 </div>
                             </div>

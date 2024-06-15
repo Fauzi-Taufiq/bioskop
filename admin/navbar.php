@@ -65,7 +65,7 @@ if (!isset($_SESSION['nama']) && !isset($_SESSION['email'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 text-gray-600 small">
+                                <span class="mr-3 text-gray-600 small">
                                     <?php
 
                                     echo $_SESSION['nama'];
