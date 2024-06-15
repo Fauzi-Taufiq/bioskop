@@ -10,5 +10,5 @@ $connection = mysqli_connect($servername, $username, $password, $database);
 if (!$connection) {
 	die("Connection gagal! " . $connection->connect_error);
 } else {
-	echo "Connection berhasil!";
+	// echo "Connection berhasil!";
 }

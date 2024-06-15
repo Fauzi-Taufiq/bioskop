@@ -1,3 +1,28 @@
+<?php
+
+include "../koneksi.php";
+session_start();
+
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = mysqli_query($connection, $sql);
+
+    if ($result->num_rows > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['nama'] = $row['nama'];
+        $_SESSION['email'] = $row['email'];
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "<script>alert('Email atau password anda salah!')</script>";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,15 +64,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Masukkan username...">
+                                            <input type="text" name="username" class="form-control form-control-user"  placeholder="Masukkan username...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Masukkan password...">
+                                            <input type="password" name="password" class="form-control form-control-user"  placeholder="Masukkan password...">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -56,9 +78,9 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.php" class="btn btn-info btn-user btn-block">
+                                        <button type="submit" name="submit" class="btn btn-info btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
