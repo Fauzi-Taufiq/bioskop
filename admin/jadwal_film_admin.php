@@ -73,37 +73,33 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Opsi</th>
+                                                    <th>ID Jadwal</th>
+                                                    <th>ID Film</th>
+                                                    <th>Waktu Tayang</th>
+                                                    <th>ID Cinema</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>
+                                                <?php
+
+                                                include "../koneksi.php";
+                                                $jadwal = mysqli_query($connection, "SELECT * FROM jadwal");
+
+                                                while ($show = mysqli_fetch_array($jadwal)) {
+
+                                                ?>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
+                                                    <td><?php echo $show['id_jadwal']; ?></td>
+                                                    <td><?php echo $show['id_film']; ?></td>
+                                                    <td><?php echo $show['waktu_tayang']; ?></td>
+                                                    <td><?php echo $show['id_cinema']; ?></td>
                                                     <td>
                                                         <a href="" class="btn btn-sm btn-primary">Ubah</a>
                                                         <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>63</td>
-                                                    <td>2011/07/25</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
