@@ -69,37 +69,35 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
+                                                    <th>ID News</th>
+                                                    <th>Gambar</th>
+                                                    <th>Judul</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Tanggal Rilis</th>
                                                     <th>Opsi</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>
+                                                <?php
+
+                                                include "../koneksi.php";
+                                                $news = mysqli_query($connection, "SELECT * FROM news");
+
+                                                while ($show = mysqli_fetch_array($news)) {
+
+                                                ?>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
+                                                    <td><?php echo $show['id_news']; ?></td>
+                                                    <td><?php echo $show['gambar']; ?></td>
+                                                    <td><?php echo $show['judul']; ?></td>
+                                                    <td><?php echo $show['deskripsi']; ?></td>
+                                                    <td><?php echo $show['tgl_rilis']; ?></td>
                                                     <td>
                                                         <a href="" class="btn btn-sm btn-primary">Ubah</a>
                                                         <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>63</td>
-                                                    <td>2011/07/25</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
