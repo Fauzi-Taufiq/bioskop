@@ -47,11 +47,17 @@ if (isset($_POST['submit'])) {
     
     <style>
         body {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/bg-login.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/bg-login.jpg');
             width: 100%;
             background-position: center;
             background-size: cover;
             object-fit: cover;
+        }
+
+        .card {
+            background: rgba(80, 80, 80, 0.5);
+            backdrop-filter: blur(10px);
+            border: none;
         }
     </style>
 
@@ -69,11 +75,11 @@ if (isset($_POST['submit'])) {
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row d-flex justify-content-center align-items-center">
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <img src="../logo-movitix-fp.png" width="30%" alt="Logo">
-                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang, Admin!</h1>
+                                        <h1 class="h4 text-light mb-4">Selamat Datang, Admin!</h1>
                                     </div>
                                     <form class="user" method="POST">
                                         <div class="form-group">
@@ -95,10 +101,7 @@ if (isset($_POST['submit'])) {
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="#">Lupa Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.php">Belum punya akun? Daftar</a>
+                                        <a class="small text-light" href="#">Lupa Password?</a>
                                     </div>
                                 </div>
                             </div>
