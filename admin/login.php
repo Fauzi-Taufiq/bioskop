@@ -44,10 +44,20 @@ if (isset($_POST['submit'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/bg-login.jpg');
+            width: 100%;
+            background-position: center;
+            background-size: cover;
+            object-fit: cover;
+        }
+    </style>
 
 </head>
 
-<body class="bg-gradient-info">
+<body class="bg-login">
     <div class="container">
 
         <!-- Outer Row -->
@@ -62,7 +72,8 @@ if (isset($_POST['submit'])) {
                             <div class="col-lg-10">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
+                                        <img src="../logo-movitix-fp.png" width="30%" alt="Logo">
+                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang, Admin!</h1>
                                     </div>
                                     <form class="user" method="POST">
                                         <div class="form-group">

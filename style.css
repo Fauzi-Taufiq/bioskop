@@ -105,6 +105,8 @@ footer a {
   color: #fff;
 }
 
+/* Background Halaman Login */
+
 /* Responsif di Smartphone */
 @media only screen and (max-width: 600px) {
   .now-playing img {
