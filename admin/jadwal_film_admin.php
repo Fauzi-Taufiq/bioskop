@@ -74,9 +74,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID Jadwal</th>
-                                                    <th>ID Film</th>
+                                                    <th>Film</th>
                                                     <th>Waktu Tayang</th>
-                                                    <th>ID Cinema</th>
+                                                    <th>Teater</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>    
@@ -84,16 +84,16 @@
                                                 <?php
 
                                                 include "../koneksi.php";
-                                                $jadwal = mysqli_query($connection, "SELECT * FROM jadwal");
+                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang, c.cinema  FROM jadwal j join film f on f.id_film=j.id_film join cinema c on c.id_cinema=j.id_cinema");
 
                                                 while ($show = mysqli_fetch_array($jadwal)) {
 
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $show['id_jadwal']; ?></td>
-                                                    <td><?php echo $show['id_film']; ?></td>
+                                                    <td><?php echo $show['nama']; ?></td>
                                                     <td><?php echo $show['waktu_tayang']; ?></td>
-                                                    <td><?php echo $show['id_cinema']; ?></td>
+                                                    <td><?php echo $show['cinema']; ?></td>
                                                     <td>
                                                         <a href="" class="btn btn-sm btn-primary">Ubah</a>
                                                         <a href="" class="btn btn-sm btn-danger">Hapus</a>

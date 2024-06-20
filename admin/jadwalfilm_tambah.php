@@ -69,23 +69,27 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Jadwal Film</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form action="jadwal_sql.php" method="POST">
                                         <div class="form-group col-md-6">
-                                            <label for="">Judul Film</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan judul film...">
+                                            <label for="">ID Jadwal</label>
+                                            <input type="number" class="form-control" name="id_jadwal" placeholder="Masukkan ID Jadwal...">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="deskripsi">Deskripsi</label>
-                                            <textarea name="deskripsi" class="form-control" id="deskripsi"></textarea>
+                                            <label for="">ID Film</label>
+                                            <input type="number" class="form-control" name="id_film" placeholder="Masukkan ID Film...">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="">Gambar</label>
-                                            <input type="file" class="form-control" placeholder="Pilih gambar...">
+                                            <label for="">Waktu Tayang</label>
+                                            <input type="date" class="form-control" name="waktu_tayang" placeholder="Masukkan Waktu Tayang...">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="">ID Cinema</label>
+                                            <input type="number" class="form-control" name="id_cinema" placeholder="Masukkan ID Cinema...">
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="button" class="btn btn-sm btn-primary">Simpan</button>
                                 </div>
                             </div>
                         </div>
