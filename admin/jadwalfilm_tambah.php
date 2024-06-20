@@ -33,12 +33,12 @@ if (isset($_POST['simpan'])) {
     if ($data) {
         echo "<script>
                 alert('data berhasil disimpan');
-                window.location.replace('tampil.php');
+                window.location.replace('jadwal_film_admin.php');
             </script>";
     } else {
         echo "<script>
                 alert('data gagal disimpan');
-                window.location.replace('add.php');
+                window.location.replace('jadwalfilm_tambah.php');
             </script>";
     }
 }
@@ -112,11 +112,11 @@ if (isset($_POST['simpan'])) {
                                             <label for="waktu_tayang">Waktu Tayang</label>
                                             <input type="datetime-local" class="form-control" name="waktu_tayang" id="waktu_tayang">
                                         </div>
-                                        <div class="card-footer">
-                                            <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
-                                        </div>
-                                    </form>
                                 </div>
+                                <div class="card-footer">
+                                    <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
