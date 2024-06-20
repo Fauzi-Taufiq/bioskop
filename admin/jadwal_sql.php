@@ -1,24 +1,48 @@
+
 <?php
 
-include "../koneksi.php";
+// include "../koneksi.php";
 
-if (isset($_POST['simpan'])) {
-    $id_jadwal      = $_POST['id_jadwal'];
-    $id_film        = $_POST['id_film'];
-    $waktu_tayang   = $_POST['waktu_tayang'];
-    $id_cinema      = $_POST['id_cinema'];
+// if (isset($_POST["filter_film"]))
+// {
+//     if (!empty($_POST["filter_film"]))
+//     {
+//         $film = mysqli_real_escape_string($koneksi, $_POST["filter_film"]);
 
-    $data = mysqli_query($connection, "INSERT INTO jadwal (id_jadwal, id_film, waktu_tayang, id_cinema) VALUES ('$id_jadwal', '$id_film', '$waktu_tayang', '$id_cinema')") or die("data salah: ". mysqli_error($mysqli));
+//         $where = " WHERE b.id_film='".$film."'";
+//     }
+// }
+// $query="SELECT 
+//             j.id_jadwal,
+//             f.id_film,
+//             j.waktu_tayang
+//         FROM 
+//             jadwal j
+//         JOIN 
+//             film f
+//         ON j.id_film = f.id_film".$where;
 
-    if ($data) {
-        echo "<script>
-                alert('data berhasil disimpan');
-                window.location.replace('tampil.php');
-            </script>";
-    } else {
-        echo "<script>
-                alert('data gagal disimpan');
-                window.location.replace('add.php');
-            </script>";
-    }
-}
+// $hasil=mysqli_query($koneksi,$query);
+// if(!$hasil){
+//   echo "kesalahan query".mysqli_error($koneksi);
+
+// }
+
+// if (isset($_POST['simpan'])) {
+//     $film           = $_POST['film'];
+//     $waktu_tayang   = $_POST['waktu_tayang'];
+
+//     $data = mysqli_query($connection, "INSERT INTO jadwal VALUES ('', '$film', '$waktu_tayang')") or die("data salah: ". mysqli_error($mysqli));
+
+//     if ($data) {
+//         echo "<script>
+//                 alert('data berhasil disimpan');
+//                 window.location.replace('tampil.php');
+//             </script>";
+//     } else {
+//         echo "<script>
+//                 alert('data gagal disimpan');
+//                 window.location.replace('add.php');
+//             </script>";
+//     }
+// }
