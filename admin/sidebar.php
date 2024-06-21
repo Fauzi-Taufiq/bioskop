@@ -37,6 +37,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="kategori.php">
+                    <i class="fas fa-fw fa-play"></i>
+                    <span>Kategori</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="transaksi_admin.php">
                     <i class="fas fa-fw fa-percent"></i>
                     <span>Transaksi</span></a>
