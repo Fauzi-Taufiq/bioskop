@@ -106,7 +106,7 @@
                                                     <td><?php echo $show['durasi']; ?></td>
                                                     <td><?php echo $show['batasumur']; ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="film-hapus.php?id=<?php echo $show['id_film'] ?>" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

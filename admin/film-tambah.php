@@ -18,7 +18,7 @@ $query = "SELECT
             f.studio,
             f.rating,
             f.durasi,
-            f.batasan_usia,
+            f.id_batasumur,
             k.kategori
         FROM 
             film f
@@ -39,10 +39,10 @@ if (isset($_POST['simpan'])) {
     $studio = $_POST['studio'];
     $rating = $_POST['rating'];
     $durasi = $_POST['durasi'];
-    $batasan_usia = $_POST['batasan_usia'];
+    $batas_umur = $_POST['batas_umur'];
     $kategori = $_POST['kategori'];
 
-    $data = mysqli_query($connection, "INSERT INTO film VALUES ('', '$judul', '$sinopsis', '$direktor', '$cast', '$studio', '$rating', '$durasi', '$batasan_usia', '$kategori')") or die("data salah: " . mysqli_error($connection));
+    $data = mysqli_query($connection, "INSERT INTO film VALUES ('', '$judul', '$sinopsis', '$direktor', '$cast', '$studio', '$rating', '$durasi', '$batas_umur', '$kategori')") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
@@ -151,8 +151,16 @@ if (isset($_POST['simpan'])) {
                                             <input type="text" class="form-control" name="durasi" id="" placeholder="Masukkan Durasi Film">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="film">Batasan Usia</label>
-                                            <input type="text" class="form-control" name="batasan_usia" id="" placeholder="Masukkan Batas Umur Film">
+                                            <label for="film">Batas Umur</label>
+                                            <select name="batas_umur" id="kategori" class="form-control">
+                                                <?php
+                                                $query = "SELECT id_batasumur, batasumur FROM batas_umur";
+                                                $hasil = mysqli_query($connection, $query);
+                                                while ($batas_umur = mysqli_fetch_assoc($hasil)) {
+                                                    echo "<option value='" . $batas_umur["id_batasumur"] . "'>" . $batas_umur["batasumur"] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                 </div>
                                 <div class="card-footer">
