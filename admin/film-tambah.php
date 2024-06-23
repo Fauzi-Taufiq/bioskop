@@ -2,34 +2,29 @@
 include "../koneksi.php";
 
 $where = "";
-if (isset($_POST["filter_film"])) {
-    if (!empty($_POST["filter_film"])) {
-        $film = mysqli_real_escape_string($connection, $_POST["filter_film"]);
-        $where = " WHERE j.id_film='" . $film . "'";
-    }
-}
-
-if (isset($_POST["filter_cinema"])) {
-    if (!empty($_POST["filter_cinema"])) {
-        $cinema = mysqli_real_escape_string($connection, $_POST["filter_cinema"]);
-        $where = " WHERE j.id_cinema='" . $cinema . "'";
+if (isset($_POST["filter_kategori"])) {
+    if (!empty($_POST["filter_kategori"])) {
+        $kategori = mysqli_real_escape_string($connection, $_POST["filter_kategori"]);
+        $where = " WHERE f.id_kategori='" . $kategori . "'";
     }
 }
 
 $query = "SELECT 
-            j.id_jadwal,
             f.id_film,
-            j.waktu_tayang,
-            c.cinema,
-            j.harga
+            f.nama,
+            f.sinopsis,
+            f.direktor,
+            f.cast,
+            f.studio,
+            f.rating,
+            f.durasi,
+            f.batasan_usia,
+            k.kategori
         FROM 
-            jadwal j
-        JOIN
-            cinema c
-        ON c.id_cinema = j.id_cinema
-        JOIN 
             film f
-        ON j.id_film = f.id_film" . $where;
+        JOIN 
+            kategori k
+        ON f.id_kategori = k.id_kategori" . $where;
 
 $hasil = mysqli_query($connection, $query);
 if (!$hasil) {
@@ -37,22 +32,27 @@ if (!$hasil) {
 }
 
 if (isset($_POST['simpan'])) {
-    $film = $_POST['film'];
-    $waktu_tayang = $_POST['waktu_tayang'];
-    $cinema = $_POST['cinema'];
-    $harga = $_POST['harga'];
+    $judul = $_POST['nama'];
+    $sinopsis = $_POST['sinopsis'];
+    $direktor = $_POST['direktor'];
+    $cast = $_POST['cast'];
+    $studio = $_POST['studio'];
+    $rating = $_POST['rating'];
+    $durasi = $_POST['durasi'];
+    $batasan_usia = $_POST['batasan_usia'];
+    $kategori = $_POST['kategori'];
 
-    $data = mysqli_query($connection, "INSERT INTO jadwal (id_film, waktu_tayang, id_cinema, harga) VALUES ('$film', '$waktu_tayang', '$cinema', '$harga')") or die("data salah: " . mysqli_error($connection));
+    $data = mysqli_query($connection, "INSERT INTO film VALUES ('', '$judul', '$sinopsis', '$direktor', '$cast', '$studio', '$rating', '$durasi', '$batasan_usia', '$kategori')") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
                 alert('data berhasil disimpan');
-                window.location.replace('jadwal_film_admin.php');
+                window.location.replace('film.php');
             </script>";
     } else {
         echo "<script>
                 alert('data gagal disimpan');
-                window.location.replace('jadwalfilm_tambah.php');
+                window.location.replace('film.php');
             </script>";
     }
 }
@@ -97,7 +97,7 @@ if (isset($_POST['simpan'])) {
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Jadwal Film</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Kategori Film</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -106,48 +106,53 @@ if (isset($_POST['simpan'])) {
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Jadwal Film</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Form Tambah Kategori Film</h6>
                                 </div>
                                 <div class="card-body">
                                     <form action="" method="POST">
                                         <div class="form-group col-md-6">
-                                            <label for="film">Film</label>
-                                            <select name="film" id="film" class="form-control">
-                                                <option value="" disabled selected>Pilih Film</option>
+                                            <label for="film">Judul</label>
+                                            <input type="text" class="form-control" name="nama" id="" placeholder="Masukkan Judul Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="film">Kategori</label>
+                                            <select name="kategori" id="kategori" class="form-control">
                                                 <?php
-                                                $query = "SELECT id_film, nama FROM film";
+                                                $query = "SELECT id_kategori, kategori FROM kategori";
                                                 $hasil = mysqli_query($connection, $query);
-                                                while ($film = mysqli_fetch_assoc($hasil)) {
-                                                    echo "<option value='" . $film["id_film"] . "'>" . $film["nama"] . "</option>";
+                                                while ($kategori = mysqli_fetch_assoc($hasil)) {
+                                                    echo "<option value='" . $kategori["id_kategori"] . "'>" . $kategori["kategori"] . "</option>";
                                                 }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="waktu_tayang">Waktu Tayang</label>
-                                            <input type="datetime-local" class="form-control" name="waktu_tayang" id="waktu_tayang">
+                                            <label for="film">Sinopsis</label>
+                                            <textarea class="form-control" name="sinopsis" id="" placeholder="Masukkan Sinopsis Film"></textarea>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="film">Teater</label>
-                                            <select name="cinema" id="cinema" class="form-control">
-                                                <option value="" disabled selected>Pilih Teater</option>
-                                                <?php
-                                                $query = "SELECT id_cinema, cinema FROM cinema";
-                                                $hasil = mysqli_query($connection, $query);
-                                                while ($cinema = mysqli_fetch_assoc($hasil)) {
-                                                    echo "<option value='" . $cinema["id_cinema"] . "'>" . $cinema["cinema"] . "</option>";
-                                                }
-                                                ?>
-                                            </select>
+                                            <label for="film">Direktor</label>
+                                            <input type="text" class="form-control" name="direktor" id="" placeholder="Masukkan Direktor Film">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="harga">Harga Tiket</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Rp.</span>
-                                                </div>
-                                                <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Tiket">
-                                            </div>
+                                            <label for="film">Cast</label>
+                                            <input type="text" class="form-control" name="cast" id="" placeholder="Masukkan Aktor Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="film">Studio</label>
+                                            <input type="text" class="form-control" name="studio" id="" placeholder="Masukkan Studio Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="film">Rating</label>
+                                            <input type="text" class="form-control" name="rating" id="" placeholder="Masukkan Rating Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="film">Durasi</label>
+                                            <input type="text" class="form-control" name="durasi" id="" placeholder="Masukkan Durasi Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="film">Batasan Usia</label>
+                                            <input type="text" class="form-control" name="batasan_usia" id="" placeholder="Masukkan Batas Umur Film">
                                         </div>
                                 </div>
                                 <div class="card-footer">
@@ -210,21 +215,6 @@ if (isset($_POST['simpan'])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
-    <script>
-        //tidak boleh melihat masalalu
-        document.addEventListener('DOMContentLoaded', function () {
-            var datetimeInput = document.getElementById('waktu_tayang');
-            var now = new Date();
-            var year = now.getFullYear();
-            var month = String(now.getMonth() + 1).padStart(2, '0');
-            var day = String(now.getDate()).padStart(2, '0');
-            var hours = String(now.getHours()).padStart(2, '0');
-            var minutes = String(now.getMinutes()).padStart(2, '0');
-            var currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-            datetimeInput.min = currentDateTime;
-        });
-    </script>
 </body>
 
 </html>

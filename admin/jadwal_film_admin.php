@@ -76,6 +76,8 @@
                                                     <th>ID Jadwal</th>
                                                     <th>Film</th>
                                                     <th>Waktu Tayang</th>
+                                                    <th>Teater</th>
+                                                    <th>Harga</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>    
@@ -83,7 +85,7 @@
                                                 <?php
 
                                                 include "../koneksi.php";
-                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang  FROM jadwal j join film f on f.id_film=j.id_film ");
+                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang, c.cinema, j.harga  FROM jadwal j join cinema c on c.id_cinema=j.id_cinema join film f on f.id_film=j.id_film ");
 
                                                 while ($show = mysqli_fetch_array($jadwal)) {
 
@@ -92,9 +94,11 @@
                                                     <td><?php echo $show['id_jadwal']; ?></td>
                                                     <td><?php echo $show['nama']; ?></td>
                                                     <td><?php echo $show['waktu_tayang']; ?></td>
+                                                    <td><?php echo $show['cinema']; ?></td>
+                                                    <td><?php echo $show['harga']; ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="jadwalfilm_ubah.php?id=<?php echo $show['id_jadwal'] ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                                        <a href="jadwalfilm-delete.php?id=<?php echo $show['id_jadwal'] ?>" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

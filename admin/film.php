@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoviTix - Data Transaksi</title>
+    <title>MoviTix - Kategori Film</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -54,72 +54,59 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Transaksi</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Kategori Film</h1>
                     </div>
 
+                    
                     <!-- Content Row -->
+
                     <div class="row">
+
+                        <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Data Transaksi</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Kategori</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Waktu Pesan</th>
-                                                    <th>Jadwal</th>
-                                                    <th>User</th>
-                                                    <th>Jumlah</th>
-                                                    <th>No. Kursi</th>
-                                                    <th>Total</th>
-                                                    <th>Admin</th>
-                                                    <th>Konfirmasi</th>
+                                                    <th>ID Film</th>
+                                                    <th>Judul</th>
+                                                    <th>Kategori</th>
+                                                    <th>Sinopsis</th>
+                                                    <th>Direktor</th>
+                                                    <th>Cast</th>
+                                                    <th>Studio</th>
+                                                    <th>Rating</th>
+                                                    <th>Durasi</th>
+                                                    <th>Batas Usia</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>
                                                 <?php
 
-                                                    include "../koneksi.php";
-                                                    $jadwal = mysqli_query($connection, 
-                                                    "SELECT t.id_trans, t.tgl_pesan, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', c.cinema) AS jadwal, CONCAT(t.id_user,' - ', u.nama) AS user, COALESCE(CONCAT(t.id_admin, ' - ', a.nama), '-') AS admin, t.jumlah, k.nomor_kursi, t.total, t.konfirmasi_pembayaran  
-                                                    FROM transaksi t 
-                                                    join jadwal j on t.id_jadwal=j.id_jadwal 
-                                                    join film f on f.id_film=j.id_film 
-                                                    join cinema c on j.id_cinema=c.id_cinema
-                                                    join users u on u.id_user=t.id_user
-                                                    left join admin a on a.id_admin=t.id_admin
-                                                    join kursi k on k.id_kursi=t.id_kursi
-                                                    ");
+                                                include "../koneksi.php";
+                                                $film = mysqli_query($connection, "SELECT *  FROM film join batas_umur on batas_umur.id_batasumur = film.id_batasumur join kategori on kategori.id_kategori = film.id_kategori ");
 
-                                                    while ($show = mysqli_fetch_array($jadwal)) {
+                                                while ($show = mysqli_fetch_array($film)) {
 
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $show['id_trans'] ?></td>
-                                                    <td><?php echo $show['tgl_pesan'] ?></td>
-                                                    <td><?php echo $show['jadwal'] ?></td>
-                                                    <td><?php echo $show['user'] ?></td>
-                                                    <td><?php echo $show['jumlah'] ?></td>
-                                                    <td><?php echo $show['nomor_kursi'] ?></td>
-                                                    <td><?php echo $show['total'] ?></td>
-                                                    <td><?php echo $show['admin'] ?></td>
+                                                    <td><?php echo $show['id_film']; ?></td>
+                                                    <td><?php echo $show['nama']; ?></td>
+                                                    <td><?php echo $show['kategori']; ?></td>
+                                                    <td><?php echo $show['sinopsis']; ?></td>
+                                                    <td><?php echo $show['direktor']; ?></td>
+                                                    <td><?php echo $show['cast']; ?></td>
+                                                    <td><?php echo $show['studio']; ?></td>
+                                                    <td><?php echo $show['rating']; ?></td>
+                                                    <td><?php echo $show['durasi']; ?></td>
+                                                    <td><?php echo $show['batasumur']; ?></td>
                                                     <td>
-                                                        <?php 
-                                                        if ($show['konfirmasi_pembayaran'] == '') {
-                                                            echo "
-                                                            <a href='' class='btn btn-sm btn-primary'>Berhasil</a>
-                                                            <a href='' class='btn btn-sm btn-danger'>Gagal</a>
-                                                            ";
-                                                        } elseif ($show['konfirmasi_pembayaran'] == 'Y') {
-                                                            echo "Centang Hijau";
-                                                        } elseif ($show['konfirmasi_pembayaran'] == 'X') {
-                                                            echo "Silang Merah";
-                                                        }
-                                                        ?>
+                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>
@@ -128,15 +115,13 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="transaksi_tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
+                                    <a href="film-tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 

@@ -19,6 +19,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="film.php">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Film</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="jadwal_film_admin.php">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Jadwal Film</span></a>

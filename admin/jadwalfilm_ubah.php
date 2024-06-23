@@ -16,6 +16,11 @@ if (isset($_POST["filter_cinema"])) {
     }
 }
 
+$id = $_GET["id"];
+
+$tampil = mysqli_query($connection, "Select * From jadwal where id_jadwal=$id");
+$tampildata = mysqli_fetch_array($tampil);
+
 $query = "SELECT 
             j.id_jadwal,
             f.id_film,
@@ -36,22 +41,25 @@ if (!$hasil) {
     echo "kesalahan query: " . mysqli_error($connection);
 }
 
+// $tampildata = mysqli_fetch_array($hasil);
+
 if (isset($_POST['simpan'])) {
+    $id_jadwal = $_POST['id_jadwal'];
     $film = $_POST['film'];
     $waktu_tayang = $_POST['waktu_tayang'];
     $cinema = $_POST['cinema'];
     $harga = $_POST['harga'];
 
-    $data = mysqli_query($connection, "INSERT INTO jadwal (id_film, waktu_tayang, id_cinema, harga) VALUES ('$film', '$waktu_tayang', '$cinema', '$harga')") or die("data salah: " . mysqli_error($connection));
+    $data = mysqli_query($connection, "UPDATE jadwal SET id_film = '$film', waktu_tayang = '$waktu_tayang', id_cinema='$cinema', harga='$harga' where id_jadwal=$id_jadwal") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
-                alert('data berhasil disimpan');
+                alert('data berhasil diubah');
                 window.location.replace('jadwal_film_admin.php');
             </script>";
     } else {
         echo "<script>
-                alert('data gagal disimpan');
+                alert('data gagal diubah');
                 window.location.replace('jadwalfilm_tambah.php');
             </script>";
     }
@@ -110,6 +118,7 @@ if (isset($_POST['simpan'])) {
                                 </div>
                                 <div class="card-body">
                                     <form action="" method="POST">
+                                        <input type="hidden" name="id_jadwal" value="<?php echo $tampildata["id_jadwal"] ?>">
                                         <div class="form-group col-md-6">
                                             <label for="film">Film</label>
                                             <select name="film" id="film" class="form-control">
@@ -118,24 +127,26 @@ if (isset($_POST['simpan'])) {
                                                 $query = "SELECT id_film, nama FROM film";
                                                 $hasil = mysqli_query($connection, $query);
                                                 while ($film = mysqli_fetch_assoc($hasil)) {
-                                                    echo "<option value='" . $film["id_film"] . "'>" . $film["nama"] . "</option>";
+                                                    $selected = ($film["id_film"] == $tampildata["id_film"]) ? "selected" : "";
+                                                    echo "<option value='" . $film["id_film"] . "' $selected>" . $film["nama"] . "</option>";
                                                 }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="waktu_tayang">Waktu Tayang</label>
-                                            <input type="datetime-local" class="form-control" name="waktu_tayang" id="waktu_tayang">
+                                            <input type="datetime-local" class="form-control" name="waktu_tayang" id="waktu_tayang" value="<?php echo $tampildata['waktu_tayang'] ?>">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="film">Teater</label>
                                             <select name="cinema" id="cinema" class="form-control">
-                                                <option value="" disabled selected>Pilih Teater</option>
+                                                <option value="" disabled>Pilih Teater</option>
                                                 <?php
                                                 $query = "SELECT id_cinema, cinema FROM cinema";
                                                 $hasil = mysqli_query($connection, $query);
                                                 while ($cinema = mysqli_fetch_assoc($hasil)) {
-                                                    echo "<option value='" . $cinema["id_cinema"] . "'>" . $cinema["cinema"] . "</option>";
+                                                    $selected = ($cinema["id_cinema"] == $tampildata["id_cinema"]) ? "selected" : "";
+                                                    echo "<option value='" . $cinema["id_cinema"] . "' $selected>" . $cinema["cinema"] . "</option>";
                                                 }
                                                 ?>
                                             </select>
@@ -146,7 +157,7 @@ if (isset($_POST['simpan'])) {
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp.</span>
                                                 </div>
-                                                <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Tiket">
+                                                <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Tiket" value="<?php echo $tampildata['harga']; ?>"
                                             </div>
                                         </div>
                                 </div>

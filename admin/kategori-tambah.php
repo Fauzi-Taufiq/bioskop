@@ -5,7 +5,7 @@ include "../koneksi.php";
 if (isset($_POST['simpan'])) {
     $kategori = $_POST['kategori'];
 
-    $data = mysqli_query($connection, "INSERT INTO kategori VALUES ('', '$kategori')") or die("data salah: " . mysqli_error($kategori));
+    $data = mysqli_query($connection, "INSERT INTO kategori VALUES ('', '$kategori')") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
@@ -15,7 +15,7 @@ if (isset($_POST['simpan'])) {
     } else {
         echo "<script>
                 alert('data gagal disimpan');
-                window.location.replace('kategori-tambah.php');
+                window.location.replace('kategori.php');
             </script>";
     }
 }
