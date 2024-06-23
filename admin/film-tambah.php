@@ -18,6 +18,7 @@ $query = "SELECT
             f.studio,
             f.rating,
             f.durasi,
+            f.gambar,
             f.id_batasumur,
             k.kategori
         FROM 
@@ -32,17 +33,64 @@ if (!$hasil) {
 }
 
 if (isset($_POST['simpan'])) {
-    $judul = $_POST['nama'];
-    $sinopsis = $_POST['sinopsis'];
-    $direktor = $_POST['direktor'];
-    $cast = $_POST['cast'];
-    $studio = $_POST['studio'];
-    $rating = $_POST['rating'];
-    $durasi = $_POST['durasi'];
-    $batas_umur = $_POST['batas_umur'];
-    $kategori = $_POST['kategori'];
+    $judul          = mysqli_real_escape_string($connection, $_POST['nama']);
+    $sinopsis       = mysqli_real_escape_string($connection, $_POST['sinopsis']);
+    $direktor       = mysqli_real_escape_string($connection, $_POST['direktor']);
+    $cast           = mysqli_real_escape_string($connection, $_POST['cast']);
+    $studio         = mysqli_real_escape_string($connection, $_POST['studio']);
+    $rating         = mysqli_real_escape_string($connection, $_POST['rating']);
+    $durasi         = mysqli_real_escape_string($connection, $_POST['durasi']);
+    $batas_umur     = mysqli_real_escape_string($connection, $_POST['batas_umur']);
+    $kategori       = mysqli_real_escape_string($connection, $_POST['kategori']);
 
-    $data = mysqli_query($connection, "INSERT INTO film VALUES ('', '$judul', '$sinopsis', '$direktor', '$cast', '$studio', '$rating', '$durasi', '$batas_umur', '$kategori')") or die("data salah: " . mysqli_error($connection));
+    // Handle image upload
+    $gambar         = $_FILES['gambar']['name'];
+    $target_dir     = "uploads/";
+    $target_file    = $target_dir . basename($gambar);
+    $uploadOk       = 1;
+    $imageFileType  = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+    if($check !== false) {
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($_FILES["gambar"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
+            echo "The file ". htmlspecialchars( basename( $_FILES["gambar"]["name"])). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+
+    // Insert data into the database
+    $data = mysqli_query($connection, "INSERT INTO film (nama, sinopsis, direktor, cast, studio, rating, durasi, gambar, id_batasumur, id_kategori) VALUES ('$judul', '$sinopsis', '$direktor', '$cast', '$studio', '$rating', '$durasi', '$gambar', '$batas_umur', '$kategori')") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
@@ -57,6 +105,7 @@ if (isset($_POST['simpan'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +158,7 @@ if (isset($_POST['simpan'])) {
                                     <h6 class="m-0 font-weight-bold text-primary">Form Tambah Kategori Film</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="POST">
+                                    <form action="" method="POST" enctype="multipart/form-data">
                                         <div class="form-group col-md-6">
                                             <label for="film">Judul</label>
                                             <input type="text" class="form-control" name="nama" id="" placeholder="Masukkan Judul Film">
@@ -149,6 +198,10 @@ if (isset($_POST['simpan'])) {
                                         <div class="form-group col-md-6">
                                             <label for="film">Durasi</label>
                                             <input type="text" class="form-control" name="durasi" id="" placeholder="Masukkan Durasi Film">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="gambar">Gambar</label>
+                                            <input type="file" class="form-control" name="gambar" id="">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="film">Batas Umur</label>

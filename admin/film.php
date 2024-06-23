@@ -82,6 +82,7 @@
                                                     <th>Studio</th>
                                                     <th>Rating</th>
                                                     <th>Durasi</th>
+                                                    <th>Gambar</th>
                                                     <th>Batas Usia</th>
                                                 </tr>
                                             </thead>    
@@ -104,6 +105,10 @@
                                                     <td><?php echo $show['studio']; ?></td>
                                                     <td><?php echo $show['rating']; ?></td>
                                                     <td><?php echo $show['durasi']; ?></td>
+                                                    <td>
+                                                        <!-- codingan aslinya buat nampilin gambar -->
+                                                        <img width="100%" src="<?php echo "uploads/".$show['gambar']; ?>" alt="Gambar Film">
+                                                    </td>
                                                     <td><?php echo $show['batasumur']; ?></td>
                                                     <td>
                                                         <a href="film-hapus.php?id=<?php echo $show['id_film'] ?>" class="btn btn-sm btn-danger">Hapus</a>
