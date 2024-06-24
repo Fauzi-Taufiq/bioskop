@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoviTix - Trailer</title>
+    <title>MoviTix - Detail Film</title>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
@@ -41,22 +41,22 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li>
-              <a href="index.html" class="nav-link px-2 link-light">Beranda</a>
+              <a href="index.php" class="nav-link px-2 link-light">Beranda</a>
             </li>
             <li>
-              <a href="jadwal.html" class="nav-link px-2 link-light">Jadwal Film</a>
+              <a href="jadwal.php" class="nav-link px-2 link-light">Jadwal Film</a>
             </li>
             <li>
-              <a href="about.html" class="nav-link px-2 link-light">About Us</a>
+              <a href="about.php" class="nav-link px-2 link-light">About Us</a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link px-2 link-light">Contact Us</a>
+              <a href="contact.php" class="nav-link px-2 link-light">Contact Us</a>
             </li>
             <li>
-              <a href="news.html" class="nav-link px-2 link-light">News</a>
+              <a href="news.php" class="nav-link px-2 link-light">News</a>
             </li>
             <li>
-              <a href="trailer.html" class="nav-link px-2 link-light">Trailers</a>             
+              <a href="trailer.php" class="nav-link px-2 link-light">Trailers</a>             
             </li>
           </ul>
 
@@ -83,25 +83,24 @@
             <div class="col">
               <h2>Detail Film</h2>
             </div>
-            <div class="row">
+          </div>
+          <div class="row">
             <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250        position-relative">
-      <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-        </div>5
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-body-secondary">Nov 12</div>
-          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continue reading
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
-        </div>
-
-      </div>
-    </div>
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250        position-relative">
+                <div class="col-auto d-none d-lg-block">
+                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/></svg>
+                </div>
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+                  <h3 class="mb-0">Featured post</h3>
+                  <div class="mb-1 text-body-secondary">Nov 12</div>
+                  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    Continue reading
+                    <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -33,22 +33,22 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li>
-              <a href="index.html" class="nav-link px-2 link-light">Beranda</a>
+              <a href="index.php" class="nav-link px-2 link-light">Beranda</a>
             </li>
             <li>
-              <a href="jadwal.html" class="nav-link px-2 link-light">Jadwal Film</a>
+              <a href="jadwal.php" class="nav-link px-2 link-light">Jadwal Film</a>
             </li>
             <li>
-              <a href="about.html" class="nav-link px-2 link-light">About Us</a>
+              <a href="about.php" class="nav-link px-2 link-light">About Us</a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link px-2 link-light">Contact Us</a>
+              <a href="contact.php" class="nav-link px-2 link-light">Contact Us</a>
             </li>
             <li>
-              <a href="news.html" class="nav-link px-2 link-light">News</a>
+              <a href="news.php" class="nav-link px-2 link-light">News</a>
             </li>
             <li>
-              <a href="trailer.html" class="nav-link px-2 link-light">Trailers</a>             
+              <a href="trailer.php" class="nav-link px-2 link-light">Trailers</a>             
             </li>
           </ul>
 

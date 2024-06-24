@@ -34,22 +34,22 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li>
-              <a href="index.html" class="nav-link px-2 link-light">Beranda</a>
+              <a href="index.php" class="nav-link px-2 link-light">Beranda</a>
             </li>
             <li>
-              <a href="jadwal.html" class="nav-link px-2 link-light">Jadwal Film</a>
+              <a href="jadwal.php" class="nav-link px-2 link-light">Jadwal Film</a>
             </li>
             <li>
-              <a href="about.html" class="nav-link px-2 link-light">About Us</a>
+              <a href="about.php" class="nav-link px-2 link-light">About Us</a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link px-2 link-light">Contact Us</a>
+              <a href="contact.php" class="nav-link px-2 link-light">Contact Us</a>
             </li>
             <li>
-              <a href="news.html" class="nav-link px-2 link-light">News</a>             
+              <a href="news.php" class="nav-link px-2 link-light">News</a>             
             </li>
             <li>
-              <a href="trailer.html" class="nav-link px-2 link-light">Trailers</a>             
+              <a href="trailer.php" class="nav-link px-2 link-light">Trailers</a>             
             </li>
           </ul>
 
@@ -130,54 +130,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Challengers.jpg" class="mb-2" alt="...">
-            </a>
-            <h6>Challengers</h6>
-          </div>
-          
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Civil War.webp" class="mb-2" alt="...">
-            </a>
-            <h6>Civil War</h6>
-          </div>
+          <?php
 
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Dua Hati Biru.webp" class="mb-2" alt="...">
-            </a>
-            <h6>Dua Hati Biru</h6>
-          </div>
+          include "koneksi.php";
 
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Fall Guy.webp" class="mb-2" alt="...">
-            </a>
-            <h6>Fall Guy</h6>
-          </div>
+          $film = mysqli_query($connection, "SELECT * FROM film");
 
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Godzilla vs Kong.jpeg" class="mb-2" alt="...">
-            </a>
-            <h6>Godzilla vs Kong</h6>
-          </div>
+          while ($show = mysqli_fetch_array($film)) {
 
+          ?>
           <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Menjelang Ajal.webp" class="mb-2" alt="...">
+            <a href="detailfilm.php?id_film=<?php echo $show['id_film']; ?>">
+              <img src="admin/uploads/<?php echo $show['gambar']; ?>" class="mb-2" alt="...">
             </a>
-            <h6>Menjelang Ajal</h6>
+            <h6><?php echo $show['nama']; ?></h6>
           </div>
-
-          <div class="col-md-2 col-sm-6 mb-2" data-aos="flip-left">
-            <a href="">
-              <img src="img/Vina Sebelum 7 Hari.webp" class="mb-2" alt="...">
-            </a>
-            <h6>Vina: Sebelum 7 Hari</h6>
-          </div>
+          <?php } ?>
         </div>
       </div>
     </section>
