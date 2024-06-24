@@ -2,20 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoviTix - Data News</title>
+    <title>MoviTix - Kategori Film</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -28,11 +25,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php
-
-        include "sidebar.php";
-
-        ?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -42,11 +35,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php
-
-                include "navbar.php";
-
-                ?>
+                <?php include "navbar.php"; ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -54,50 +43,55 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">News</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Daftar Berita</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
+
+                        <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Data News</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Kategori</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>ID News</th>
+                                                    <th>Id News</th>
                                                     <th>Gambar</th>
                                                     <th>Judul</th>
                                                     <th>Deskripsi</th>
-                                                    <th>Tanggal Rilis</th>
-                                                    <th>Opsi</th>
+                                                    <th>Tgl Rilis</th>
                                                 </tr>
-                                            </thead>    
+                                            </thead>
                                             <tbody>
-                                                <?php
-
+                                                <?php 
                                                 include "../koneksi.php";
-                                                $news = mysqli_query($connection, "SELECT * FROM news");
+                                                $show = mysqli_query($connection, "select * from news");
 
-                                                while ($show = mysqli_fetch_array($news)) {
+                                                if (!$show) {
+                                                    die("Query error: " . mysqli_error($connection));
+                                                }
 
+                                                while ($row = mysqli_fetch_assoc($show)) : 
                                                 ?>
-                                                <tr>
-                                                    <td><?php echo $show['id_news']; ?></td>
-                                                    <td><?php echo $show['gambar']; ?></td>
-                                                    <td><?php echo $show['judul']; ?></td>
-                                                    <td><?php echo $show['deskripsi']; ?></td>
-                                                    <td><?php echo $show['tgl_rilis']; ?></td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
-                                                <?php } ?>
+                                                    <tr>
+                                                        <td><?php echo $row['id_news'] ?></td>
+                                                        <td>
+                                                            <?php if (!empty($row['gambar'])) : ?>
+                                                                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['gambar']); ?>" alt="Gambar Film">
+                                                            <?php else : ?>
+                                                                <p>Gambar tidak tersedia</p>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td><?php echo $row['judul'] ?></td>
+                                                        <td><?php echo $row['deskripsi'] ?></td>
+                                                        <td><?php echo $row['tgl_rilis'] ?></td>
+                                                    </tr>
+                                                <?php endwhile; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -108,20 +102,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Content Row -->
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php
-
-            include "footer.php";
-
-            ?>
+            <?php include "footer.php"; ?>
             <!-- End of Footer -->
 
         </div>

@@ -1,48 +1,21 @@
-<?php
-if (isset($_POST['simpan'])) {
-    include "../koneksi.php";
-
-    $judul = $_POST['judul'];
-    $deskripsi = $_POST['deskripsi'];
-    $tgl_rilis = $_POST['tgl_rilis'];
-
-    // Tangani upload file
-    $gambar = $_FILES['gambar']['tmp_name'];
-    $gambarContent = addslashes(file_get_contents($gambar));
-
-    // Masukkan data ke dalam database
-    $data = mysqli_query($connection, "INSERT INTO news (gambar, judul, deskripsi, tgl_rilis) VALUES ('$gambarContent', '$judul', '$deskripsi', '$tgl_rilis')") or die("data salah: " . mysqli_error($connection));
-
-    if ($data) {
-        echo "<script>
-                alert('data berhasil disimpan');
-                window.location.replace('news_admin.php');
-            </script>";
-    } else {
-        echo "<script>
-                alert('data gagal disimpan');
-                window.location.replace('news_admin.php');
-            </script>";
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoviTix - Data News</title>
+    <title>MoviTix - Data Berita</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -55,7 +28,11 @@ if (isset($_POST['simpan'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php"; ?>
+        <?php
+
+        include "sidebar.php";
+
+        ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -65,7 +42,11 @@ if (isset($_POST['simpan'])) {
             <div id="content">
 
                 <!-- Topbar -->
-                <?php include "navbar.php"; ?>
+                <?php
+
+                include "navbar.php";
+
+                ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -73,38 +54,60 @@ if (isset($_POST['simpan'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">News</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Jadwal Film</h1>
                     </div>
 
+                    
                     <!-- Content Row -->
+
                     <div class="row">
 
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data News</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Data Jadwal Film</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" enctype="multipart/form-data">
-                                        <div class="form-group col-md-6">
-                                            <label for="">Gambar Berita</label><br>
-                                            <input type="file" name="gambar" id="">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="">Judul Berita</label>
-                                            <input type="text" class="form-control" name="judul" placeholder="Masukkan judul berita...">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="deskripsi">Deskripsi</label>
-                                            <textarea name="deskripsi" class="form-control" id="deskripsi"></textarea>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="">Tanggal Upload</label>
-                                            <input type="date" class="form-control" name="tgl_rilis">
-                                        </div>
-                                        <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
-                                    </form>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID Jadwal</th>
+                                                    <th>Film</th>
+                                                    <th>Waktu Tayang</th>
+                                                    <th>Teater</th>
+                                                    <th>Harga</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>    
+                                            <tbody>
+                                                <?php
+
+                                                include "../koneksi.php";
+                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang, c.cinema, j.harga  FROM jadwal j join cinema c on c.id_cinema=j.id_cinema join film f on f.id_film=j.id_film ");
+
+                                                while ($show = mysqli_fetch_array($jadwal)) {
+
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $show['id_jadwal']; ?></td>
+                                                    <td><?php echo $show['nama']; ?></td>
+                                                    <td><?php echo $show['waktu_tayang']; ?></td>
+                                                    <td><?php echo $show['cinema']; ?></td>
+                                                    <td><?php echo $show['harga']; ?></td>
+                                                    <td>
+                                                        <a href="jadwalfilm_ubah.php?id=<?php echo $show['id_jadwal'] ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                                        <a href="jadwalfilm-delete.php?id=<?php echo $show['id_jadwal'] ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="jadwalfilm_tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +118,11 @@ if (isset($_POST['simpan'])) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php include "footer.php"; ?>
+            <?php
+
+            include "footer.php";
+
+            ?>
             <!-- End of Footer -->
 
         </div>
@@ -130,7 +137,8 @@ if (isset($_POST['simpan'])) {
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

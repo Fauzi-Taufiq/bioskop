@@ -1,33 +1,3 @@
-<?php
-if (isset($_POST['simpan'])) {
-    include "../koneksi.php";
-
-    $judul = $_POST['judul'];
-    $deskripsi = $_POST['deskripsi'];
-    $tgl_rilis = $_POST['tgl_rilis'];
-
-    // Tangani upload file
-    $gambar = $_FILES['gambar']['tmp_name'];
-    $gambarContent = addslashes(file_get_contents($gambar));
-
-    // Masukkan data ke dalam database
-    $data = mysqli_query($connection, "INSERT INTO news (gambar, judul, deskripsi, tgl_rilis) VALUES ('$gambarContent', '$judul', '$deskripsi', '$tgl_rilis')") or die("data salah: " . mysqli_error($connection));
-
-    if ($data) {
-        echo "<script>
-                alert('data berhasil disimpan');
-                window.location.replace('news_admin.php');
-            </script>";
-    } else {
-        echo "<script>
-                alert('data gagal disimpan');
-                window.location.replace('news_admin.php');
-            </script>";
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +8,7 @@ if (isset($_POST['simpan'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoviTix - Data News</title>
+    <title>MoviTix - Kategori Film</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,7 +43,7 @@ if (isset($_POST['simpan'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">News</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Daftar Berita</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -83,28 +53,51 @@ if (isset($_POST['simpan'])) {
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data News</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Kategori</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" enctype="multipart/form-data">
-                                        <div class="form-group col-md-6">
-                                            <label for="">Gambar Berita</label><br>
-                                            <input type="file" name="gambar" id="">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="">Judul Berita</label>
-                                            <input type="text" class="form-control" name="judul" placeholder="Masukkan judul berita...">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="deskripsi">Deskripsi</label>
-                                            <textarea name="deskripsi" class="form-control" id="deskripsi"></textarea>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="">Tanggal Upload</label>
-                                            <input type="date" class="form-control" name="tgl_rilis">
-                                        </div>
-                                        <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
-                                    </form>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id News</th>
+                                                    <th>Gambar</th>
+                                                    <th>Judul</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Tgl Rilis</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                include "../koneksi.php";
+                                                $show = mysqli_query($connection, "select * from news");
+
+                                                if (!$show) {
+                                                    die("Query error: " . mysqli_error($connection));
+                                                }
+
+                                                while ($row = mysqli_fetch_assoc($show)) : 
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $row['id_news'] ?></td>
+                                                        <td>
+                                                            <?php if (!empty($row['gambar'])) : ?>
+                                                                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['gambar']); ?>" alt="Gambar Film">
+                                                            <?php else : ?>
+                                                                <p>Gambar tidak tersedia</p>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td><?php echo $row['judul'] ?></td>
+                                                        <td><?php echo $row['deskripsi'] ?></td>
+                                                        <td><?php echo $row['tgl_rilis'] ?></td>
+                                                    </tr>
+                                                <?php endwhile; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="film-tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +123,8 @@ if (isset($_POST['simpan'])) {
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
