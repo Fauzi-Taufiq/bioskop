@@ -101,9 +101,9 @@ $datashow = mysqli_fetch_array($data);
           </div>
           <div class="row">
             <div class="col-md-10">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
+              <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
                 <div class="col-auto d-none d-lg-block">
-                  <img src="admin/uploads/<?php echo $datashow['gambar']; ?>" class="poster-film" alt="poster film">
+                  <img src="admin/uploads/<?php echo $datashow['gambar']; ?>" class="poster-film shadow" alt="poster film">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
                   <h3 class="mb-3"><?php echo $datashow['nama']; ?></h3>
