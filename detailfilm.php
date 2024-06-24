@@ -1,3 +1,12 @@
+<?php
+
+include "koneksi.php";
+
+$data = mysqli_query($connection, "SELECT * FROM film WHERE id_film='$_GET[id_film]'");
+$datashow = mysqli_fetch_array($data);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +15,8 @@
     <title>MoviTix - Detail Film</title>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,6 +29,12 @@
     <style>
         .trailer-film {
             background-color: #191919;
+        }
+
+        .poster-film {
+          width: 100%;
+          height: 270px;
+          object-fit: cover;
         }
     </style>
     
@@ -85,18 +102,21 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250        position-relative">
+            <div class="col-md-10">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
                 <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/></svg>
+                  <img src="admin/uploads/<?php echo $datashow['gambar']; ?>" class="poster-film" alt="poster film">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
-                  <h3 class="mb-3">Transformers</h3>
-                  <div class="mb-3 text-body-light">4.8</div>
-                  <p class="card-text mb-3">An ancient struggle between two Cybertronian races, the heroic Autobots and the evil Decepticons, comes to Earth, with a clue to the ultimate power held by a teenager.</p>
+                  <h3 class="mb-3"><?php echo $datashow['nama']; ?></h3>
+                  <div class="mb-3 text-body-light">
+                    <i class="bi bi-star-fill me-1"></i>
+                    <?php echo $datashow['rating']; ?>
+                  </div>
+                  <p class="card-text mb-3"><?php echo $datashow['sinopsis'] ?></p>
                   <p>
                     Director :
-                    Michael Bay
+                    <?php echo $datashow['direktor']; ?>
                   </p>
                 </div>
               </div>
