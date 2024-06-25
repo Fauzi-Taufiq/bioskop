@@ -84,6 +84,7 @@
                                                     <th>Durasi</th>
                                                     <th>Gambar</th>
                                                     <th>Batas Usia</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>

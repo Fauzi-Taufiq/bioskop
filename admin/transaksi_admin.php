@@ -85,7 +85,7 @@
 
                                                     include "../koneksi.php";
                                                     $jadwal = mysqli_query($connection, 
-                                                    "SELECT t.id_trans, t.tgl_pesan, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', c.cinema) AS jadwal, CONCAT(t.id_user,' - ', u.nama) AS user, COALESCE(CONCAT(t.id_admin, ' - ', a.nama), '-') AS admin, t.jumlah, k.nomor_kursi, t.total, t.konfirmasi_pembayaran  
+                                                    "SELECT t.id_trans, t.tgl_pesan, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', 'Teater ', c.cinema) AS jadwal, CONCAT(t.id_user,' - ', u.nama) AS user, COALESCE(CONCAT(t.id_admin, ' - ', a.nama), '-') AS admin, t.jumlah, k.nomor_kursi, t.total, t.konfirmasi_pembayaran  
                                                     FROM transaksi t 
                                                     join jadwal j on t.id_jadwal=j.id_jadwal 
                                                     join film f on f.id_film=j.id_film 
@@ -110,10 +110,8 @@
                                                     <td>
                                                         <?php 
                                                         if ($show['konfirmasi_pembayaran'] == '') {
-                                                            echo "
-                                                            <a href='' class='btn btn-sm btn-primary'>Berhasil</a>
-                                                            <a href='' class='btn btn-sm btn-danger'>Gagal</a>
-                                                            ";
+                                                            echo '<a href="transaksi_success.php?id=' . $show['id_trans'] . '" class="btn btn-sm btn-primary">Berhasil</a>';
+                                                            echo ' <a href="transaksi_gagal.php?id='.$show['id_trans']. '" class="btn btn-sm btn-danger">Gagal</a>';
                                                         } elseif ($show['konfirmasi_pembayaran'] == 'Y') {
                                                             echo "Centang Hijau";
                                                         } elseif ($show['konfirmasi_pembayaran'] == 'X') {
@@ -126,9 +124,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <a href="transaksi_tambah.php" class="btn btn-sm btn-primary">Tambah Data</a>
                                 </div>
                             </div>
                         </div>

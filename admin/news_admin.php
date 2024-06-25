@@ -65,6 +65,7 @@
                                                     <th>Judul</th>
                                                     <th>Deskripsi</th>
                                                     <th>Tgl Rilis</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -82,7 +83,7 @@
                                                         <td><?php echo $row['id_news'] ?></td>
                                                         <td>
                                                             <?php if (!empty($row['gambar'])) : ?>
-                                                                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['gambar']); ?>" alt="Gambar Film">
+                                                                <img width="100%" src="data:image/jpeg;base64,<?php echo base64_encode($row['gambar']); ?>" alt="Gambar Film">
                                                             <?php else : ?>
                                                                 <p>Gambar tidak tersedia</p>
                                                             <?php endif; ?>
@@ -90,6 +91,9 @@
                                                         <td><?php echo $row['judul'] ?></td>
                                                         <td><?php echo $row['deskripsi'] ?></td>
                                                         <td><?php echo $row['tgl_rilis'] ?></td>
+                                                        <td>
+                                                            <a href="news-hapus.php?id=<?php echo $row['id_news'] ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                                        </td>
                                                     </tr>
                                                 <?php endwhile; ?>
                                             </tbody>
