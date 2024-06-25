@@ -69,37 +69,27 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Opsi</th>
+                                                    <th>Id Trailer</th>
+                                                    <th>Link</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>
+                                                <?php
+                                                include "../koneksi.php";
+
+                                                $data = mysqli_query($connection, "Select * from trailer");
+                                                while ($show = mysqli_fetch_array($data)) {
+
+                                                    
+                                                ?>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
+                                                    <td><?php echo $show['id_trailer'] ?></td>
+                                                    <td><?php echo $show['link'] ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
                                                         <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>63</td>
-                                                    <td>2011/07/25</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-primary">Ubah</a>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
-                                                    </td>
-                                                </tr>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>

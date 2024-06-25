@@ -77,7 +77,7 @@
                                                     die("Query error: " . mysqli_error($connection));
                                                 }
 
-                                                while ($row = mysqli_fetch_assoc($show)) : 
+                                                while ($row = mysqli_fetch_array($show)) : 
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $row['id_news'] ?></td>

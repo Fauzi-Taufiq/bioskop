@@ -85,22 +85,19 @@
             </div>
           </div>
           <div class="row">
+            <?php
+            include "koneksi.php";
+
+            $data = mysqli_query($connection, "select * from trailer");
+
+            while ($show = mysqli_fetch_array($data)) {
+              
+            
+            ?>
             <div class="col-md-4">
-              <iframe width="100%" height="250" class="rounded-3" src="https://www.youtube.com/embed/c2G18nIVpNE"></iframe>
+              <iframe width="100%" height="250" class="rounded-3" src="<?php echo $show['link'] ?>"></iframe>
             </div>
-            <div class="col-md-4">
-              <iframe width="100%" height="250" class="rounded-3" src="https://www.youtube.com/embed/BjA7jqKCoqQ"></iframe>
-            </div>
-            <div class="col-md-4">
-              <iframe width="100%" height="250" class="rounded-3" src="https://www.youtube.com/embed/EySdVK0NK1Y"></iframe>
-            </div>
-            <div class="col-md-4">
-              <iframe width="100%" height="250" class="rounded-3" src="https://www.youtube.com/embed/odM92ap8_c0"></iframe>
-            </div>
-            <div class="col-md-4">
-              <iframe width="100%" height="250" class="rounded-3" src="https://www.youtube.com/embed/hb9XAYFNfNE"></iframe>
-            </div>
-          </div>
+            <?php } ?>
         </div>
       </section>
       <!-- trailer akhir -->
