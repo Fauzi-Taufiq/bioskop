@@ -39,8 +39,8 @@ include "koneksi.php";
     }
 
     .seat {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background-image: url('seat-icon.png'); /* Path to your seat icon */
       background-size: cover;
       background-repeat: no-repeat;
