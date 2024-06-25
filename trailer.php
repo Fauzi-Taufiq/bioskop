@@ -92,7 +92,6 @@
 
             while ($show = mysqli_fetch_array($data)) {
               
-            
             ?>
             <div class="col-md-4">
               <iframe width="100%" height="250" class="rounded-3" src="<?php echo $show['link'] ?>"></iframe>

@@ -71,6 +71,7 @@
                                                 <tr>
                                                     <th>Id Trailer</th>
                                                     <th>Link</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>    
                                             <tbody>

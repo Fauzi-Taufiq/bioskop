@@ -81,45 +81,28 @@
         <div class="row mb-3">
           <div class="col-md-12">
             <ul class="list-unstyled">
+            <?php 
+              include "koneksi.php";
+
+              $data = mysqli_query($connection, "SELECT * from news");
+              
+              while ($show = mysqli_fetch_array($data)) {
+                
+              
+              ?>
               <li>
                 <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/1.jpg">
+                  <img class="img-fluid" 
+                  src="admin/uploads/<?php echo $show['gambar']; ?>">
                   <div class="col-lg-8 text-light">
-                    <h5 class="mb-2">James Gunn Bagikan Foto Terbaru David Corenswet Sebagai Superman!</h5>
-                    <p>Salah satu film dari semesta DCU milik James Gunn yang paling dinantikan adalah film Superman yang akan mengambil kisah Superman yang lebih muda dari Superman...</p>
-                    <small class="">January 15, 2024</small>
+                    <h5 class="mb-2"><?php echo $show['judul'] ?></h5>
+                    <p><?php echo $show['deskripsi'] ?></p>
+                    <small class=""><?php echo $show['tgl_rilis'] ?></small>
                   </div>
                 </a>
               </li>
-              <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/2.jpg">
-                  <div class="col-lg-8 text-light">
-                    <h5 class="mb-2">'Trap' Kisahkan Aksi Penangkapan Pembunuh Berantai</h5>
-                    <p>Sutradara M. Night Shyamalan kembali hadirkan karya terbarunya yang bertemakan thriller misteri berjudul Trap yang diperankan oleh Josh Harnett. Jika tidak ada perubahan, filmnya dikabarkan...</p>
-                    <small class="">January 14, 2024</small>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/3.jpg">
-                  <div class="col-lg-8 text-light">
-                    <h5 class="mb-2">5 Karakter Terkuat di DCEU versi MoviTix</h5>
-                    <p>Siapa sih di sini yang suka banget sama film-film superhero terutama superhero dari DCEU atau DC Extended Universe? Kali ini TIX ID sudah merangkum 5...</p>
-                    <small class="">January 13, 2024</small>
-                  </div>
-                </a>
-              </li>
+              <?php } ?>
             </ul>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <a href="news.html" class="btn-custom-secondary">
-              <strong>Lihat Berita Selengkapnya</strong>
-              <i class="ms-2 bi bi-arrow-right"></i>
-            </a>
           </div>
         </div>
       </div>

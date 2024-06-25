@@ -71,31 +71,24 @@
                                             <tbody>
                                                 <?php 
                                                 include "../koneksi.php";
-                                                $show = mysqli_query($connection, "select * from news");
+                
+                                                $news = mysqli_query($connection, "SELECT * FROM news");
 
-                                                if (!$show) {
-                                                    die("Query error: " . mysqli_error($connection));
-                                                }
-
-                                                while ($row = mysqli_fetch_array($show)) : 
+                                                while ($show = mysqli_fetch_array($news)) {
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row['id_news'] ?></td>
+                                                        <td><?php echo $show['id_news'] ?></td>
                                                         <td>
-                                                            <?php if (!empty($row['gambar'])) : ?>
-                                                                <img width="100%" src="data:image/jpeg;base64,<?php echo base64_encode($row['gambar']); ?>" alt="Gambar Film">
-                                                            <?php else : ?>
-                                                                <p>Gambar tidak tersedia</p>
-                                                            <?php endif; ?>
+                                                            <img width="100%" src="<?php echo "uploads/".$show['gambar']; ?>" alt="Gambar Berita">
                                                         </td>
-                                                        <td><?php echo $row['judul'] ?></td>
-                                                        <td><?php echo $row['deskripsi'] ?></td>
-                                                        <td><?php echo $row['tgl_rilis'] ?></td>
+                                                        <td><?php echo $show['judul'] ?></td>
+                                                        <td><?php echo $show['deskripsi'] ?></td>
+                                                        <td><?php echo $show['tgl_rilis'] ?></td>
                                                         <td>
                                                             <a href="news-hapus.php?id=<?php echo $row['id_news'] ?>" class="btn btn-sm btn-danger">Hapus</a>
                                                         </td>
                                                     </tr>
-                                                <?php endwhile; ?>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>

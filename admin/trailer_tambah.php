@@ -1,3 +1,26 @@
+<?php
+include "../koneksi.php";
+
+
+if (isset($_POST['simpan'])) {
+    $link = $_POST['link'];
+
+    $data = mysqli_query($connection, "INSERT INTO trailer VALUES ('', '$link')") or die("data salah: " . mysqli_error($connection));
+
+    if ($data) {
+        echo "<script>
+                alert('data berhasil disimpan');
+                window.location.replace('trailer_admin.php');
+            </script>";
+    } else {
+        echo "<script>
+                alert('data gagal disimpan');
+                window.location.replace('trailer_admin.php');
+            </script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,16 +92,16 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Trailer</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <h1>404</h1>
-                                        <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                                        <p class="text-gray-500 mb-0">Masih bingung mau diisi kayak apa form nya</p>
-                                        <a href="trailer_admin.php">&larr; Balik ke Trailer</a>
+                                    <form action="" method="POST">
+                                            <div class="form-group col-md-6">
+                                                <label for="link">Kategori</label>
+                                                <input type="text" class="form-control" name="link" id="link" placeholder="Masukkan Link Video">
+                                            </div>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="button" class="btn btn-sm btn-primary">Simpan</button>
-                                </div>
+                                    <div class="card-footer">
+                                        <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

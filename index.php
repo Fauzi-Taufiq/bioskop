@@ -201,7 +201,7 @@
               <li>
                 <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
                   <img class="img-fluid" 
-                  src="data:image/jpeg;base64,<?php echo base64_encode($show['gambar']); ?>">
+                  src="admin/uploads/<?php echo $show['gambar']; ?>">
                   <div class="col-lg-8 text-light">
                     <h5 class="mb-2"><?php echo $show['judul'] ?></h5>
                     <p><?php echo $show['deskripsi'] ?></p>
@@ -215,7 +215,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <a href="news.html" class="btn-custom-secondary">
+            <a href="news.php" class="btn-custom-secondary">
               <strong>Lihat Berita Selengkapnya</strong>
               <i class="ms-2 bi bi-arrow-right"></i>
             </a>

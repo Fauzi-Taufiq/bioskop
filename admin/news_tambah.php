@@ -2,16 +2,58 @@
 if (isset($_POST['simpan'])) {
     include "../koneksi.php";
 
-    $judul = $_POST['judul'];
-    $deskripsi = $_POST['deskripsi'];
-    $tgl_rilis = $_POST['tgl_rilis'];
+    $judul          = $_POST['judul'];
+    $deskripsi      = $_POST['deskripsi'];
+    $tgl_rilis      = $_POST['tgl_rilis'];
 
-    // Tangani upload file
-    $gambar = $_FILES['gambar']['tmp_name'];
-    $gambarContent = addslashes(file_get_contents($gambar));
+    // Handle image upload
+    $gambar         = $_FILES['gambar']['name'];
+    $target_dir     = "uploads/";
+    $target_file    = $target_dir . basename($gambar);
+    $uploadOk       = 1;
+    $imageFileType  = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+    if($check !== false) {
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($_FILES["gambar"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
+            echo "The file ". htmlspecialchars( basename( $_FILES["gambar"]["name"])). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
 
     // Masukkan data ke dalam database
-    $data = mysqli_query($connection, "INSERT INTO news (gambar, judul, deskripsi, tgl_rilis) VALUES ('$gambarContent', '$judul', '$deskripsi', '$tgl_rilis')") or die("data salah: " . mysqli_error($connection));
+    $data = mysqli_query($connection, "INSERT INTO news (gambar, judul, deskripsi, tgl_rilis) VALUES ('$gambar', '$judul', '$deskripsi', '$tgl_rilis')") or die("data salah: " . mysqli_error($connection));
 
     if ($data) {
         echo "<script>
@@ -103,9 +145,11 @@ if (isset($_POST['simpan'])) {
                                             <label for="">Tanggal Upload</label>
                                             <input type="date" class="form-control" name="tgl_rilis">
                                         </div>
-                                        <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
-                                    </form>
                                 </div>
+                                <div class="card-footer">
+                                    <button type="submit" name="simpan" class="btn btn-sm btn-primary">Simpan</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
