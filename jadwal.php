@@ -103,7 +103,14 @@
                     <span class="badge text-bg-success mb-3"><i class="bi bi-star-fill me-1"></i><?php echo $show['rating']; ?></span>
                     <small class="showtime">
                       <p>SHOWTIME</p>
-                      <span class="badge text-bg-danger mb-2"><?php echo $show['waktu_tayang']; ?></span>
+                      <?php
+                        $dateTime = explode(' ', $show['waktu_tayang']);
+                        $date = $dateTime[0];
+                        $time = $dateTime[1];
+                      ?>
+                      <span class="badge text-bg-danger mb-2"><?php echo $date ?></span>
+                      <br>
+                      <span class="badge text-bg-warning mb-2"><?php echo $time ?></span>
                     </small>
                     <p>Teather : <?php echo $show['cinema'] ?></p>
                     <p><?php echo $show['durasi'] ?></p>
