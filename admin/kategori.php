@@ -66,7 +66,7 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Kategori</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Data Kategori</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -91,7 +91,7 @@
                                                     <td><?php echo $show['id_kategori']; ?></td>
                                                     <td><?php echo $show['kategori']; ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="kategori_hapus.php?id=<?php echo $show['id_kategori'] ?>" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

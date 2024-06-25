@@ -87,7 +87,7 @@
                                                     <td><?php echo $show['id_trailer'] ?></td>
                                                     <td><?php echo $show['link'] ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="trailer_hapus.php?id=<?php echo $show['id_trailer'] ?>" class="btn btn-sm btn-danger">Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

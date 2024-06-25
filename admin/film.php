@@ -54,7 +54,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Kategori Film</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Film</h1>
                     </div>
 
                     
@@ -66,7 +66,7 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Kategori</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Data Film</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
