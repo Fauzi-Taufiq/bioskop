@@ -15,6 +15,14 @@
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
 
+    <style>
+      .poster-film {
+          width: 100%;
+          height: 270px;
+          object-fit: cover;
+      }
+    </style>
+
     <!-- AOS (animate on scroll) -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
@@ -75,73 +83,34 @@
             <h2>Jadwal Film</h2>
           </div>
         </div>
-        <br>
-        <div class="row-md-3">
-          <div class="col">
-            <center>
-              <div class="col" style="background-color: #d60000; border-radius: 10px;">
-                <h3 class="py-3" style="text-align: center;">Now Showing</h3>
-              </div>
-            </center>
-          </div>
-        </div>
-        <br>
         <div class="row mb-3">
           <div class="col-md-12 col-sm-12">
             <ul class="list-unstyled">
+            <?php
+
+            include "koneksi.php";
+            $jadwal = mysqli_query($connection, "SELECT f.id_film, f.gambar, f.nama, f.rating, f.durasi, b.batasumur, j.waktu_tayang, c.cinema FROM jadwal j join cinema c on c.id_cinema=j.id_cinema join film f on f.id_film=j.id_film join batas_umur b on b.id_batasumur=f.id_batasumur");
+
+            while ($show = mysqli_fetch_assoc($jadwal)) {
+
+            ?>
               <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/Godzilla vs Kong.jpeg">
+                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="detailfilm.php?id_film=<?php echo $show['id_film']; ?>">
+                  <img class="img-fluid poster-film" src="admin/uploads/<?php echo $show['gambar'] ?>">
                   <div class="col-lg-8 col-sm-12 text-light">
-                    <h5 class="mb-2">Godzilla vs Kong</h5>
+                    <h5 class="mb-2"><?php echo $show['nama']; ?></h5>
+                    <span class="badge text-bg-primary mb-3 me-1"><?php echo $show['batasumur']; ?></span>
+                    <span class="badge text-bg-success mb-3"><i class="bi bi-star-fill me-1"></i><?php echo $show['rating']; ?></span>
                     <small class="showtime">
                       <p>SHOWTIME</p>
-                      <span class="badge text-bg-danger">11:30</span>
-                      <span class="badge text-bg-danger">11:30</span>
-                      <span class="badge text-bg-danger">11:30</span>
-                      <span class="badge text-bg-danger">11:30</span>
-                      <span class="badge text-bg-danger">11:30</span>
-                      <span class="badge text-bg-danger">11:30</span>
+                      <span class="badge text-bg-danger mb-2"><?php echo $show['waktu_tayang']; ?></span>
                     </small>
-                    <p class="pt-2">2h 25min</p>
+                    <p>Teather : <?php echo $show['cinema'] ?></p>
+                    <p><?php echo $show['durasi'] ?></p>
                   </div>
                 </a>
               </li>
-              <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/Dua Hati Biru.webp">
-                  <div class="col-lg-8 col-sm-12 text-light">
-                    <h5 class="mb-2">Dua Garis Biru</h5>
-                    <small class="showtime">
-                      <p>SHOWTIME</p>
-                      <span class="badge text-bg-danger">13:30</span>
-                      <span class="badge text-bg-danger">13:30</span>
-                      <span class="badge text-bg-danger">13:30</span>
-                      <span class="badge text-bg-danger">13:30</span>
-                      <span class="badge text-bg-danger">13:30</span>
-                      <span class="badge text-bg-danger">13:30</span>
-                    </small>
-                    <p class="pt-2">2h 25min</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" src="img/Civil War.webp">
-                  <div class="col-lg-8 col-sm-12 text-light">
-                    <h5 class="mb-2">Civil War</h5>
-                    <small class="showtime">
-                      <p>SHOWTIME</p>
-                      <span class="badge text-bg-danger">15:00</span>
-                      <span class="badge text-bg-danger">15:00</span>
-                      <span class="badge text-bg-danger">15:00</span>
-                      <span class="badge text-bg-danger">15:00</span>
-                      <span class="badge text-bg-danger">15:00</span>
-                    </small>
-                    <p class="pt-2">2h 25min</p>
-                  </div>
-                </a>
-              </li>
+              <?php } ?>
             </ul>
           </div>
         </div>
