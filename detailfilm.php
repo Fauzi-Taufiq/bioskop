@@ -12,7 +12,7 @@ $datashow = mysqli_fetch_array($data);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoviTix - Detail Film</title>
+    <title>MoviTix - <?php echo $datashow['nama'] ?></title>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
@@ -112,10 +112,24 @@ $datashow = mysqli_fetch_array($data);
                     <?php echo $datashow['rating']; ?>
                   </div>
                   <p class="card-text mb-3"><?php echo $datashow['sinopsis'] ?></p>
-                  <p>
-                    Director :
-                    <?php echo $datashow['direktor']; ?>
-                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p>
+                        Director :
+                        <?php echo $datashow['direktor']; ?>
+                        <br>
+                        Cast :
+                        <?php echo $datashow['cast']; ?>
+                      </p>
+                    </div>
+                    <div class="col-md-6">
+                      Studio :
+                      <?php echo $datashow['studio'] ?>
+                      <br>
+                      Durasi :
+                      <?php echo $datashow['durasi'] ?>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
