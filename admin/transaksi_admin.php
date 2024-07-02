@@ -9,6 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <title>MoviTix - Data Transaksi</title>
 
     <!-- Custom fonts for this template-->
@@ -113,7 +115,7 @@
                                                             echo '<a href="transaksi_success.php?id=' . $show['id_trans'] . '" class="btn btn-sm btn-primary">Berhasil</a>';
                                                             echo ' <a href="transaksi_gagal.php?id='.$show['id_trans']. '" class="btn btn-sm btn-danger">Gagal</a>';
                                                         } elseif ($show['konfirmasi_pembayaran'] == 'Y') {
-                                                            echo "Centang Hijau";
+                                                            echo '<i class="bi bi-check-circle-fill"></i>';
                                                         } elseif ($show['konfirmasi_pembayaran'] == 'X') {
                                                             echo "Silang Merah";
                                                         }
