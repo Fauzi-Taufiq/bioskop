@@ -93,8 +93,12 @@ if (isset($_POST['simpan'])) {
                                 </div>
                                 <div class="card-body">
                                     <form action="" method="POST">
+                                    <div class="form-group col-md-6">
+                                                <label for="link">Judul</label>
+                                                <input type="text" class="form-control" name="" id="" placeholder="Masukkan Judul">
+                                            </div>
                                             <div class="form-group col-md-6">
-                                                <label for="link">Kategori</label>
+                                                <label for="link">Link</label>
                                                 <input type="text" class="form-control" name="link" id="link" placeholder="Masukkan Link Video">
                                             </div>
                                     </div>

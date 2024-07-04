@@ -67,7 +67,6 @@ if (!isset($_SESSION['nama']) && !isset($_SESSION['email'])) {
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-3 text-gray-600 small">
                                     <?php
-
                                     echo $_SESSION['nama'];
                                     echo "<br>";
                                     echo $_SESSION['email'];

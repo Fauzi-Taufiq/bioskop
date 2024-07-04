@@ -197,7 +197,7 @@ if (isset($_POST['simpan'])) {
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="film">Durasi</label>
-                                            <input type="text" class="form-control" name="durasi" id="" placeholder="Masukkan Durasi Film">
+                                            <input type="text" class="form-control" name="durasi" id="" placeholder="Masukkan Durasi Film ">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="gambar">Gambar</label>

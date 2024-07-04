@@ -2,8 +2,53 @@
 
 include "koneksi.php";
 
+/* echo "<pre>";
+print_r($_SESSION);
+die; */
 // $data = mysqli_query($connection, "query WHERE id_film='$_GET[id_film]'");
 // $datashow = mysqli_fetch_array($data);
+
+// Query untuk mengambil kursi yang sudah dipesan berdasarkan jadwal
+$idfilm = isset($_GET["id_film"]) ? $_GET["id_film"] : "";
+$idjadwal = isset($_GET["id_jadwal"]) ? $_GET["id_jadwal"] : "";
+
+$bookedSeats = [];
+$queryBookedSeats = mysqli_query($connection, "SELECT id_kursi FROM transaksi WHERE id_jadwal = '$idjadwal'");
+while ($rowBookedSeats = mysqli_fetch_assoc($queryBookedSeats)) {
+    $bookedSeats[] = $rowBookedSeats['id_kursi'];
+}
+
+if (isset($_POST['pesan'])) {
+  $tgl_pesan = date('Y-m-d H:i:s'); // Set tgl_pesan to the current date and time
+  $id_jadwal = isset($_POST['id_jadwal']) ? $_POST['id_jadwal'] : "";
+  $id_user = isset($_POST['id_user']) ? $_POST['id_user'] : "";
+  $id_kursi = isset($_POST['seat']) ? $_POST['seat'] : "";
+
+  if (empty($id_jadwal) or empty($id_user) or empty($id_kursi)) {
+    echo "<script>
+      alert('Gagal memesan tiket, harap memilih kursi!');
+    </script>";
+  }
+  // $total = 35000;
+
+  $data = mysqli_query($connection, "INSERT INTO transaksi (tgl_pesan, id_jadwal, id_user, id_kursi) VALUES ('$tgl_pesan', $id_jadwal, $id_user, $id_kursi)") or die("data salah: " . mysqli_error($connection));
+
+  if ($data) {
+    echo "<script>
+              alert('Pembelian Berhasil');
+              window.location.replace('index.php');
+          </script>";
+  } else {
+    echo "<script>
+              alert('Pembelian Gagal');
+          </script>";
+  }
+}
+
+if (empty($idjadwal)) {
+  header("location: index.php");
+  die();
+}
 
 ?>
 
@@ -13,7 +58,8 @@ include "koneksi.php";
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MoviTix - <?php //echo $datashow['nama'] ?></title>
+  <title>MoviTix - <?php //echo $datashow['nama'] 
+                    ?></title>
   <!-- bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
@@ -39,9 +85,11 @@ include "koneksi.php";
     }
 
     .seat {
+      position: relative;
       width: 50px;
       height: 50px;
-      background-image: url('seat-icon.png'); /* Path to your seat icon */
+      background-image: url('seat-icon.png');
+      /* Path to your seat icon */
       background-size: cover;
       background-repeat: no-repeat;
       border-radius: 10px;
@@ -51,11 +99,14 @@ include "koneksi.php";
       cursor: pointer;
     }
 
-    .seat input[type="checkbox"] {
+    .seat input[type="radio"] {
       display: none;
     }
 
     .seat label {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: flex;
@@ -65,7 +116,7 @@ include "koneksi.php";
       background-color: green;
     }
 
-    .seat input[type="checkbox"]:checked + label {
+    .seat input[type="radio"]:checked+label {
       background-color: rgba(118, 199, 192, 0.7);
     }
 
@@ -73,7 +124,7 @@ include "koneksi.php";
       background-color: rgba(179, 229, 252, 0.7);
     }
   </style>
-  
+
 
   <script type="text/javascript" src="script.js"></script>
 
@@ -87,48 +138,7 @@ include "koneksi.php";
 <body>
 
   <!-- Navbar -->
-  <header class="p-3 sticky-top transparent shadow">
-    <div class="container-fluid">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="#" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-          <img src="logo-movitix-fp.png" width="130" alt="Logo" />
-        </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li>
-            <a href="index.php" class="nav-link px-2 link-light">Beranda</a>
-          </li>
-          <li>
-            <a href="jadwal.php" class="nav-link px-2 link-light">Jadwal Film</a>
-          </li>
-          <li>
-            <a href="about.php" class="nav-link px-2 link-light">About Us</a>
-          </li>
-          <li>
-            <a href="contact.php" class="nav-link px-2 link-light">Contact Us</a>
-          </li>
-          <li>
-            <a href="news.php" class="nav-link px-2 link-light">News</a>
-          </li>
-          <li>
-            <a href="trailer.php" class="nav-link px-2 link-light">Trailers</a>
-          </li>
-        </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Cari film..." aria-label="Search" />
-        </form>
-
-        <button type="button" class="btn-custom-primary me-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Login
-        </button>
-
-        <button type="button" class="btn-custom-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-          Sign Up
-        </button>
-      </div>
-    </div>
-  </header>
+  <?php include "navbar.php"; ?>
   <!-- akhir navbar -->
 
   <!-- detail film -->
@@ -140,459 +150,70 @@ include "koneksi.php";
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">H01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">H02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">H03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">H04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">H05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">H06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">H07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">H08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">H09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">H10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">H11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">H12</label>
-              </div>
-            </div>
-          </div>
+        <div class="col-md-12 bg-danger">
+          <center>Layar Lebar</center>
         </div>
         <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">G01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">G02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">G03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">G04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">G05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">G06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">G07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">G08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">G09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">G10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">G11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">G12</label>
-              </div>
-            </div>
-          </div>
-        </div>        
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">F01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">F02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">F03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">F04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">F05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">F06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">F07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">F08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">F09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">F10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">F11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">F12</label>
-              </div>
-            </div>
-          </div>
-        </div>        
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">E01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">E02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">E03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">E04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">E05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">E06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">E07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">E08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">E09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">E10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">E11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">E12</label>
-              </div>
-            </div>
-          </div>
-        </div>        
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">D01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">D02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">D03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">D04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">D05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">D06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">D07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">D08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">D09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">D10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">D11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">D12</label>
-              </div>
-            </div>
-          </div>
+          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative"></div>
+          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative"></div>
         </div>
-        
         <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">C01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">C02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">C03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">C04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">C05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">C06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">C07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">C08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">C09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">C10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">C11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">C12</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">B01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">B02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">B03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">B04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">B05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">B06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">B07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">B08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">B09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">B10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">B11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">B12</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-12">
-          <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-          <div class="seat-grid">
-              <div class="seat">
-                <input type="checkbox" id="seat1">
-                <label for="seat1">A01</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat2">
-                <label for="seat2">A02</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat3">
-                <label for="seat3">A03</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat4">
-                <label for="seat4">A04</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat5">
-                <label for="seat5">A05</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat6">
-                <label for="seat6">A06</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat7">
-                <label for="seat7">A07</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat8">
-                <label for="seat8">A08</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat9">
-                <label for="seat9">A09</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">A10</label>
-              </div>
-              <div class="seat"></div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">A11</label>
-              </div>
-              <div class="seat">
-                <input type="checkbox" id="seat10">
-                <label for="seat10">A12</label>
-              </div>
-            </div>
-          </div>
-        </div>
+          <form action="" method="post">
+            <input type="hidden" name="idfilm">
+            <input type="hidden" name="id_jadwal" value="<?php echo $idjadwal; ?>" >
+            <input type="hidden" name="id_user" value="<?php echo $_SESSION['id'] ?>" > <!-- contoh, id_user dari session -->
+            <?php
+            $kursi = mysqli_query($connection, "SELECT * FROM kursi");
+            $seatMap = [];
+            while ($row = mysqli_fetch_assoc($kursi)) {
+              $seatMap[$row['nomor_kursi']] = $row;
+            }
 
+            // Loop untuk menampilkan kursi
+            for ($row = 'A'; $row <= 'H'; $row++) {
+              echo '<div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">';
+              echo '<div class="seat-grid">';
+              for ($col = 1; $col <= 12; $col++) {
+                  $seatNum = $row . str_pad($col, 2, '0', STR_PAD_LEFT);
+                  if (isset($seatMap[$seatNum])) {
+                      $seatValue = $seatMap[$seatNum]['id_kursi'];
+                      $isBooked = in_array($seatValue, $bookedSeats); // Cek apakah kursi sudah dipesan
+                      echo '<div class="seat">';
+                      if ($isBooked) {
+                          // Kursi sudah dipesan
+                          echo '<input type="radio" name="seat" id="seat' . $seatNum . '" disabled>';
+                          echo '<label for="seat' . $seatNum . '" style="background-color: grey;">' . $seatNum . '</label>'; // Merah untuk kursi yang sudah dipesan
+                      } else {
+                          // Kursi tersedia
+                          echo '<input type="radio" name="seat" id="seat' . $seatNum . '" value="' . $seatValue . '">';
+                          echo '<label for="seat' . $seatNum . '">' . $seatNum . '</label>';
+                      }
+                      echo '</div>';
+                  } else {
+                      // Kursi tidak ada dalam database
+                      echo '<div class="seat">';
+                      echo '<input type="radio" name="seat" id="seat' . $seatNum . '" disabled>';
+                      echo '<label for="seat' . $seatNum . '">' . $seatNum . '</label>';
+                      echo '</div>';
+                  }
+
+                  if ($col == 2 || $col == 10) {
+                      echo '<div class="seat"></div>'; // Spacing after seat 2 and 10
+                  }
+              }
+              echo '</div>';
+              echo '</div>';
+            }
+
+            ?>
+
+            <div class="col-md-6">
+              <button class="btn btn-primary" type="submit" name="pesan">Pesan</button>
+            </div>
+          </form>
+        </div>
       </div>
+
     </div>
   </section>
   <!-- trailer akhir -->
@@ -686,104 +307,11 @@ include "koneksi.php";
 
 
   <!-- Modal Login -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0 text-light">
-          <h1 class="fw-bold mb-0 fs-2">Login</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body p-5 pt-0">
-          <form class="">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
-              <label for="floatingInput">Alamat Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password" />
-              <label for="floatingPassword">Password</label>
-            </div>
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-custom-primary" type="submit">
-              Login
-            </button>
-
-            <small class="text-light">By clicking Sign up, you agree to the terms of use.</small>
-            <hr class="my-4" />
-            <h2 class="fs-5 fw-bold mb-3 text-light">Or use a third-party</h2>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary" type="submit">
-              <i class="bi bi-twitter-x me-2"></i>
-              Sign up with Twitter
-            </button>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-primary" type="submit">
-              <i class="bi bi-facebook me-2"></i>
-              Sign up with Facebook
-            </button>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary" type="submit">
-              <i class="bi bi-github me-2"></i>
-              Sign up with GitHub
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php include "modallogin.php" ?>
   <!-- akhir modal login -->
 
   <!-- Modal Sign Up -->
-  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-          <h1 class="fw-bold mb-0 fs-2 text-light">Register</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body p-5 pt-0">
-          <form class="">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
-              <label for="floatingInput">Alamat Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
-              <label for="floatingInput">Nama Lengkap</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password" />
-              <label for="floatingPassword">Password</label>
-            </div>
-
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-custom-primary" type="submit">
-              Sign up
-            </button>
-
-            <small class="text-light">By clicking Sign up, you agree to the terms of use.</small>
-            <hr class="my-4" />
-            <h2 class="fs-5 fw-bold mb-3 text-light">Or use a third-party</h2>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-              <i class="bi bi-twitter-x me-2"></i>
-              Sign up with Twitter
-            </button>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
-              <i class="bi bi-facebook me-2"></i>
-              Sign up with Facebook
-            </button>
-
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-              <i class="bi bi-github me-2"></i>
-              Sign up with GitHub
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php include "modalsignup.php" ?>
   <!-- modal sign up akhir -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoviTix - News</title>
+    <title>MoviTix - Trailer</title>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
@@ -14,6 +14,12 @@
 
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .trailer-film {
+            background-color: #191919;
+        }
+    </style>
     
     <script type="text/javascript" src="script.js"></script>
 
@@ -26,48 +32,41 @@
   <body>
 
     <!-- Navbar -->
-    <?php include "navbar.php"; ?>
+    <?php
+    include "navbar.php";
+    ?>
     <!-- akhir navbar -->
 
-    <!-- news -->
-    <section class="news text-light py-5">
-      <div class="container">
-        <div class="row mb-3">
-          <div class="col">
-            <h2>News</h2>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <ul class="list-unstyled">
-            <?php 
-              include "koneksi.php";
+    <!-- trailer -->
+     <section class="text-light py-5">
+        <div class="container">
+            <div class="row-mb-5">
+                <div class="col">
+                    <h2>Transaksi Saya</h2>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 col-sm-12">
+                    <ul class="list-unstyled">
+                    
+                        <?php
+                        include "koneksi.php";
 
-              $data = mysqli_query($connection, "SELECT * from news");
-              
-              while ($show = mysqli_fetch_array($data)) {
-                
-              
-              ?>
-              <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top text-light" href="#">
-                  <img class="img-fluid" 
-                  src="admin/uploads/<?php echo $show['gambar']; ?>">
-                  <div class="col-lg-8 text-light">
-                    <h5 class="mb-2"><?php echo $show['judul'] ?></h5>
-                    <p><?php echo $show['deskripsi'] ?></p>
-                    <small class=""><?php echo $show['tgl_rilis'] ?></small>
-                  </div>
-                </a>
-              </li>
-              <?php } ?>
-            </ul>
-          </div>
+                        session_start();
+                        $id = $_SESSION['id'];
+                        $data = mysqli_query($connection, "select t.*, j.harga, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', 'Teater ', c.cinema) from transaksi t where t.id_user=$id join jadwal j on t.id_jadwal=j.id_jadwal join cinema c on c.id_cinema=j.id_cinema");
+                        while($show = mysqli_fetch_array($data)){
+                            
+                        ?>
+                        <li>
+                            
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
-    <!-- news akhir -->
-
+     </section>
     <!-- Footer -->
     <footer class="py-5">
       <div class="container text-light">

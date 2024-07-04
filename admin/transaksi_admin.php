@@ -15,9 +15,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -75,19 +73,18 @@
                                                     <th>Waktu Pesan</th>
                                                     <th>Jadwal</th>
                                                     <th>User</th>
-                                                    <th>Jumlah</th>
                                                     <th>No. Kursi</th>
-                                                    <th>Total</th>
                                                     <th>Admin</th>
                                                     <th>Konfirmasi</th>
                                                 </tr>
-                                            </thead>    
+                                            </thead>
                                             <tbody>
                                                 <?php
 
-                                                    include "../koneksi.php";
-                                                    $jadwal = mysqli_query($connection, 
-                                                    "SELECT t.id_trans, t.tgl_pesan, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', 'Teater ', c.cinema) AS jadwal, CONCAT(t.id_user,' - ', u.nama) AS user, COALESCE(CONCAT(t.id_admin, ' - ', a.nama), '-') AS admin, t.jumlah, k.nomor_kursi, t.total, t.konfirmasi_pembayaran  
+                                                include "../koneksi.php";
+                                                $jadwal = mysqli_query(
+                                                    $connection,
+                                                    "SELECT t.id_trans, t.tgl_pesan, CONCAT(f.nama, ' - ', j.waktu_tayang, ' - ', 'Teater ', c.cinema) AS jadwal, CONCAT(t.id_user,' - ', u.nama) AS user, COALESCE(CONCAT(t.id_admin, ' - ', a.nama), '-') AS admin, k.nomor_kursi, t.konfirmasi_pembayaran  
                                                     FROM transaksi t 
                                                     join jadwal j on t.id_jadwal=j.id_jadwal 
                                                     join film f on f.id_film=j.id_film 
@@ -95,33 +92,32 @@
                                                     join users u on u.id_user=t.id_user
                                                     left join admin a on a.id_admin=t.id_admin
                                                     join kursi k on k.id_kursi=t.id_kursi
-                                                    ");
+                                                    "
+                                                );
 
-                                                    while ($show = mysqli_fetch_array($jadwal)) {
+                                                while ($show = mysqli_fetch_array($jadwal)) {
 
                                                 ?>
-                                                <tr>
-                                                    <td><?php echo $show['id_trans'] ?></td>
-                                                    <td><?php echo $show['tgl_pesan'] ?></td>
-                                                    <td><?php echo $show['jadwal'] ?></td>
-                                                    <td><?php echo $show['user'] ?></td>
-                                                    <td><?php echo $show['jumlah'] ?></td>
-                                                    <td><?php echo $show['nomor_kursi'] ?></td>
-                                                    <td><?php echo $show['total'] ?></td>
-                                                    <td><?php echo $show['admin'] ?></td>
-                                                    <td>
-                                                        <?php 
-                                                        if ($show['konfirmasi_pembayaran'] == '') {
-                                                            echo '<a href="transaksi_success.php?id=' . $show['id_trans'] . '" class="btn btn-sm btn-primary">Berhasil</a>';
-                                                            echo ' <a href="transaksi_gagal.php?id='.$show['id_trans']. '" class="btn btn-sm btn-danger">Gagal</a>';
-                                                        } elseif ($show['konfirmasi_pembayaran'] == 'Y') {
-                                                            echo '<i class="bi bi-check-circle-fill"></i>';
-                                                        } elseif ($show['konfirmasi_pembayaran'] == 'X') {
-                                                            echo "Silang Merah";
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?php echo $show['id_trans'] ?></td>
+                                                        <td><?php echo $show['tgl_pesan'] ?></td>
+                                                        <td><?php echo $show['jadwal'] ?></td>
+                                                        <td><?php echo $show['user'] ?></td>
+                                                        <td><?php echo $show['nomor_kursi'] ?></td>
+                                                        <td><?php echo $show['admin'] ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($show['konfirmasi_pembayaran'] == '') {
+                                                                echo '<a href="transaksi_success.php?id=' . $show['id_trans'] . '" class="btn btn-sm btn-primary">Berhasil</a>';
+                                                                echo ' <a href="transaksi_gagal.php?id=' . $show['id_trans'] . '" class="btn btn-sm btn-danger">Gagal</a>';
+                                                            } elseif ($show['konfirmasi_pembayaran'] == 'Y') {
+                                                                echo '<i class="bi bi-check-circle-fill"></i>';
+                                                            } elseif ($show['konfirmasi_pembayaran'] == 'X') {
+                                                                echo '<i class="bi bi-x-circle-fill"></i>';
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
                                                 <?php } ?>
                                             </tbody>
                                         </table>
@@ -130,7 +126,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -157,8 +153,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -38,16 +38,14 @@ if (isset($_POST['submit'])) {
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    
+
     <style>
         body {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/bg-login.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/bg-login.jpg');
             width: 100%;
             background-position: center;
             background-size: cover;
@@ -83,10 +81,10 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <form class="user" method="POST">
                                         <div class="form-group">
-                                            <input type="text" name="username" class="form-control form-control-user"  placeholder="Masukkan username...">
+                                            <input type="text" name="username" class="form-control form-control-user" placeholder="Masukkan username...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"  placeholder="Masukkan password...">
+                                            <input type="password" name="password" class="form-control form-control-user" placeholder="Masukkan password...">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">

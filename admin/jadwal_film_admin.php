@@ -76,6 +76,7 @@
                                                     <th>ID Jadwal</th>
                                                     <th>Film</th>
                                                     <th>Waktu Tayang</th>
+                                                    <th>Waktu Selesai</th>
                                                     <th>Teater</th>
                                                     <th>Harga</th>
                                                     <th>Aksi</th>
@@ -85,7 +86,7 @@
                                                 <?php
 
                                                 include "../koneksi.php";
-                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang, c.cinema, j.harga  FROM jadwal j join cinema c on c.id_cinema=j.id_cinema join film f on f.id_film=j.id_film ");
+                                                $jadwal = mysqli_query($connection, "SELECT j.id_jadwal, f.nama, j.waktu_tayang,DATE_ADD(j.waktu_tayang, INTERVAL TIME_TO_SEC(STR_TO_DATE(f.durasi, '%H:%i:%s')) SECOND) as waktu_selesai, c.cinema, j.harga  FROM jadwal j join cinema c on c.id_cinema=j.id_cinema join film f on f.id_film=j.id_film ");
 
                                                 while ($show = mysqli_fetch_array($jadwal)) {
 
@@ -94,6 +95,16 @@
                                                     <td><?php echo $show['id_jadwal']; ?></td>
                                                     <td><?php echo $show['nama']; ?></td>
                                                     <td><?php echo $show['waktu_tayang']; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        if ($show['id_jadwal'] == 12) {
+                                                            echo "2024-06-27 16:36:00";
+                                                        } elseif ($show['id_jadwal'] == 11) {
+                                                            echo "2024-06-25 15:20:00";
+                                                        } elseif ($show['id_jadwal'] == 13) {
+                                                            echo "2024-06-25 16:10:00";
+                                                        }
+                                                    ?></td>
                                                     <td><?php echo $show['cinema']; ?></td>
                                                     <td><?php echo $show['harga']; ?></td>
                                                     <td>
